@@ -1,0 +1,33 @@
+.caja_boton_enviar{
+    margin-bottom: 25px;
+}
+
+.boton_enviar{
+    background: #30353c;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 10px 70px;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
+.boton_enviar span{
+    color: white;
+}
+
+.tabla_contacto{
+    text-align: center;
+    margin: auto;
+}
+
+.cajon_contacto{
+    float: center;
+    margin-top: 15px;
+}
+
+.iconos_contacto{
+    color: #30353c;
+    padding-top: 20px;
+    font-size: 4em;
+    padding-bottom: 10px;
+}

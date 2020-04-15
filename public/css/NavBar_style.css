@@ -1,0 +1,50 @@
+@charset "utf-8";
+/* CSS Document */
+
+#nombre-nav-bar{
+	padding-left: 10px;
+}
+
+#nav_login{
+    text-align: right;
+}
+#ingreso_boton, #registro_boton:hover, #registro_boton:hover{
+    color: slateblue;
+    text-decoration: none;
+}
+
+.jumbotron h1{
+    font-size: 3rem;
+}
+
+.banner_footer{
+    margin-top: 50px;
+    width: 100%;
+    height: 150px;
+    background: #30353c;
+    text-align: center;
+}
+
+.banner_footer h6{
+    color: white;
+}
+
+#logo_final{
+    height: 100px;
+}
+
+#creditos{
+    opacity: 0.5;
+}
+
+@media (min-width: 768px){
+#nav_login .dropdown-menu {
+    left: -150px;
+    }
+}
+
+@media (max-width: 768px){
+    #nav_login{
+        text-align: left;
+    }
+}

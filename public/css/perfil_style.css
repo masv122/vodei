@@ -1,0 +1,111 @@
+.menu_lateral{
+    color: #fff;
+    background: hsl(215, 11%, 21%);
+    text-align: center;
+    padding-top: 2%;
+    width: 10%;
+    height: 100%;
+    position: fixed;
+    top: 60px;
+    z-index: 100;
+}
+
+.cajones_menu_lateral{
+    width: 100%;
+}
+
+.header-menu-lateral a{
+    color: #85c34a;
+    padding-top: 10px;
+    font-size: 1.8rem;
+}
+
+.boton_menu_lateral{
+    color: white;
+    font-size: 0.7rem;
+}
+
+.collapse{
+    text-align: center;
+}
+
+.cajones_filas{
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.icono_suscripcion{
+    color: #30353c;
+    font-size: 8em;
+}
+
+.contenido_perfil{
+    padding-top: 20px;
+    background-color: #79807379;
+    margin-left: 4%;
+}
+
+#foto_perfil{
+    height: 150px;
+}
+
+.caja_boton_actualizar_suscripcion{
+    margin-bottom: 25px;
+}
+
+.boton_actualizar_suscripcion{
+    background: #30353c;
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 1px;
+    width: 100%;
+}
+
+.boton_actualizar_suscripcion span{
+    color: white;
+}
+
+article{
+    margin-top: 20px;
+    padding-left: 3%;
+    padding-right: 10px;
+    border: 3px solid #85c34a;
+    border-radius: 10px;
+    background: #30353c;
+    color: #fff;
+}
+
+article p{
+    padding-top: 12%;
+}
+
+.caja_datos_articulo{
+    border-right: white;
+    float:left;
+}
+
+@media (max-width:767px){
+    .menu_lateral {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding-top: unset;
+        height: unset;
+        top: unset;
+        z-index: 1030;
+        display:-webkit-box;
+      }
+
+      .cajones_menu_lateral{
+        width: 20%;
+        padding: unset;
+      }
+ 
+      .header-menu-lateral a{
+        color: #85c34a;
+        padding-top: 10px;
+        font-size: 2rem;
+    }
+}
