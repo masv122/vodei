@@ -98,7 +98,7 @@ export default {
 .contenedor_items a,
 .nav_bar_contenido_y_filtro a {
   text-decoration: none;
-  color: #ccc;
+  color: #fff;
 }
 .contenedor_items a:hover,
 .nav_bar_contenido_y_filtro a:hover {

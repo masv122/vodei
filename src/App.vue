@@ -2,7 +2,7 @@
   <div>
     <b-container fluid>
       <b-row>
-        <b-col v-if="!loginVisible" class="navLateral bg-dark shadow" cols="1">
+        <b-col v-if="!loginVisible" class="navLateral bg-success shadow" cols="1">
           <LateralNav/>
         </b-col>
         <b-col class="contenido pb-5" :cols="loginVisible ? 12 : 11">
