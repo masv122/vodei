@@ -26,19 +26,31 @@ export default {
     Jumbotron
   },
   methods: {
-    ...mapMutations(["addBreadcrumb"])
+    ...mapMutations(["addBreadcrumb"]),
+    ...mapMutations("Catalogo", ["setPeliculas"]),
+    cargarPeliculas() {
+      this.axios
+        .get("/pelicula")
+        .then(res => {
+          this.setPeliculas(res.data.data);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   },
   created() {
     this.addBreadcrumb([
       {
-          text: 'Home',
-          to : { name : "Home"}
+        text: "Home",
+        to: { name: "Home" }
       },
-      { 
-        text: "Contenido", 
-        to: { name: "Contenido" } 
+      {
+        text: "Contenido",
+        to: { name: "Contenido" }
       }
     ]);
+    this.cargarPeliculas();
   }
 };
 </script>

@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import Catalogo from '@/modules/Catalogo';
 
 Vue.use(Vuex);
 
@@ -39,5 +40,7 @@ export default new Vuex.Store({
       return state.loginVisible;
     }
   },
-  modules: {},
+  modules: {
+    Catalogo
+  },
 });

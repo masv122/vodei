@@ -3,7 +3,7 @@
     <b-container fluid class="p-2">
       <b-row>
         <b-col v-for="(pelicula, index) in peliculas" v-bind:key="index" cols="3">
-          <ContenidoIndividual :titulo='pelicula.titulo' :portada='pelicula.portada'/>
+          <ContenidoIndividual :titulo='pelicula.Titulo'/>
         </b-col>
       </b-row>
     </b-container>
@@ -12,14 +12,14 @@
 
 <script>
 import ContenidoIndividual from "@/components/ContenidoIndividual.vue";
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "Catalogo",
   computed: {
-    ...mapState(["peliculas"])
+    ...mapGetters('Catalogo', ['peliculas'])
   },
-  components: {
+  components: { 
     ContenidoIndividual
   }
 };
