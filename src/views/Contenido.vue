@@ -2,7 +2,7 @@
   <div>
     <section>
       <div>
-        <Jumbotron />
+        <Jumbotron titulo="Contenido" :pieTitulo="pieTitulo"/>
         <NavContenido />
         <Catalogo />
         <Paginacion />
@@ -16,9 +16,14 @@ import Catalogo from "@/components/Catalogo.vue";
 import NavContenido from "@/components/NavContenido.vue";
 import Paginacion from "@/components/Paginacion.vue";
 import Jumbotron from "@/components/Jumbotron.vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 export default {
   name: "Contenido",
+  data() {
+    return {
+      pieTitulo: "En este apartado podras navegar por todo el catalogo que ofrece Vodei asi como agregar nuevo contenido o modifcarlo"
+    }
+  },
   components: {
     Catalogo,
     NavContenido,
@@ -27,17 +32,7 @@ export default {
   },
   methods: {
     ...mapMutations(["addBreadcrumb"]),
-    ...mapMutations("Catalogo", ["setPeliculas"]),
-    cargarPeliculas() {
-      this.axios
-        .get("/pelicula")
-        .then(res => {
-          this.setPeliculas(res.data.data);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
+    ...mapActions("Catalogo", ["cargarPeliculas"]),
   },
   created() {
     this.addBreadcrumb([

@@ -19,13 +19,13 @@
     <transition name="fade">
       <b-jumbotron
         bg-variant="light"
-        header="BootstrapVue"
-        lead="Bootstrap 4 Components for Vue.js 2"
+        :header="titulo"
+        :lead="pieTitulo"
         class="mb-1 jumbo"
         v-show="visible"
       >
-        <p>For more information visit website</p>
-        <b-button variant="primary" href="#">Documentacion</b-button>
+        <p>{{ parrafo }}</p>
+        <b-button variant="success" href="#"><i class="fa fa-book" aria-hidden="true"></i> Documentacion {{ titulo }}</b-button>
         <div class="ml-auto"></div>
       </b-jumbotron>
     </transition>
@@ -35,9 +35,20 @@
 <script>
 export default {
   name: "Jumbotron",
+  props: {
+    titulo: {
+      type: String,
+      default: ''
+    },
+    pieTitulo: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
-      visible: true
+      visible: true,
+      parrafo: 'Pára mas informacion visite la documentacion'
     };
   }
 };

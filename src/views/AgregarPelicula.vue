@@ -1,10 +1,21 @@
 <template>
   <div>
+    <b-modal id="ModalPelicula" title="Confirme">
+      <ContenidoModalPelicula :pelicula="retornaPelicula()" />
+      <template v-slot:modal-footer="{ ok, cancel }">
+        <b-button size="sm" variant="success" @click="ok();agregarPelicula(retornaPelicula())">
+          Agregar
+        </b-button>
+        <b-button size="sm" variant="danger" @click="cancel()">
+          Cancelar
+        </b-button>
+      </template>
+    </b-modal>
     <b-container>
       <h1 class="display-4 my-3">
         <i class="fa fa-plus" aria-hidden="true"></i> Agregar Pelicula
       </h1>
-      <form>
+      <form @submit.prevent="">
         <b-form-row>
           <b-col cols-sm="12" cols-md="6">
             <b-form-group>
@@ -99,7 +110,7 @@
                 <b-form-input
                   id="titulo-original"
                   type="text"
-                  v-model="titulo_original"
+                  v-model="tituloOriginal"
                   required
                   placeholder="Ingrese Titulo original"
                 >
@@ -199,8 +210,9 @@
         <b-form-group align="center">
           <b-button
             block
-            @click="agregarPelicula(retornaPelicula())"
             variant="primary"
+            type="submit"
+            v-b-modal.ModalPelicula
           >
             Agregar
           </b-button>
@@ -214,12 +226,10 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
+import ContenidoModalPelicula from "@/components/ContenidoModalPelicula.vue";
+import { mapMutations, mapGetters } from "vuex";
 export default {
   name: "AgregarPelicula",
-  computed: {
-    ...mapState(["peliculas"])
-  },
   data() {
     return {
       idiomasSel: null,
@@ -265,30 +275,38 @@ export default {
       titulo: "",
       productora: "",
       actores: "",
-      titulo_original: "",
+      tituloOriginal: "",
       director: "",
       duracion: "",
       fecha: "",
-      sinopsis: ""
+      sinopsis: "",
+      tipo: 0,
+      id: 0
     };
   },
+  computed: {
+     ...mapGetters("Catalogo", ["peliculas"])
+  },
   methods: {
-    ...mapMutations(["agregarPelicula", "addBreadcrumb"]),
+    ...mapMutations("Catalogo", ["agregarPelicula"]),
+    ...mapMutations(["addBreadcrumb"]),
     retornaPelicula() {
       return {
+        id: this.peliculas.length + 1,
         titulo: this.titulo,
         idioma: this.idiomasSel,
         subtitulo: this.subtitulosSel,
         productora: this.productora,
         actores: this.actores,
-        titulo_original: this.titulo_original,
+        tituloOriginal: this.tituloOriginal,
         genero: this.generoSel,
         pais: this.paisSel,
         fecha: this.fecha,
         director: this.director,
         duracion: this.duracion,
-        portada: this.portada.name,
-        sinopsis: this.sinopsis
+        portada: this.portada === null ? "" : this.portada.name,
+        sinopsis: this.sinopsis,
+        tipo: this.tipo
       };
     }
   },
@@ -307,6 +325,9 @@ export default {
         to: { name: "Agregar Pelicula" }
       }
     ]);
+  },
+  components: {
+    ContenidoModalPelicula
   }
 };
 </script>
