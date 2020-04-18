@@ -3,7 +3,7 @@
     <b-modal id="ModalPelicula" title="Confirme">
       <ContenidoModalPelicula :pelicula="retornaPelicula()" />
       <template v-slot:modal-footer="{ ok, cancel }">
-        <b-button size="sm" variant="success" @click="ok();agregarPelicula(retornaPelicula())">
+        <b-button size="sm" variant="success" @click="ok();_agregarPelicula()">
           Agregar
         </b-button>
         <b-button size="sm" variant="danger" @click="cancel()">
@@ -227,7 +227,7 @@
 
 <script>
 import ContenidoModalPelicula from "@/components/ContenidoModalPelicula.vue";
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "AgregarPelicula",
   data() {
@@ -289,6 +289,7 @@ export default {
   },
   methods: {
     ...mapMutations("Catalogo", ["agregarPelicula"]),
+    ...mapActions("Catalogo", ["agregarPelicula"]),
     ...mapMutations(["addBreadcrumb"]),
     retornaPelicula() {
       return {
@@ -308,6 +309,25 @@ export default {
         sinopsis: this.sinopsis,
         tipo: this.tipo
       };
+    },
+    _agregarPelicula(){
+        const resultado = this.agregarPelicula(this.retornaPelicula());
+        resultado.then(res => {
+          var mensaje = '';
+          if(res.error){
+            mensaje = 'No se pudo agregar la pelicula';
+            alert(res.error_object);
+          }
+          else{
+            mensaje = 'Pelicula agregada satisfactoriamente';
+          }
+          this.$bvToast.toast(mensaje, {
+          title: "Aviso",
+          autoHideDelay: 5000,
+          appendToast: true,
+        });
+
+        })
     }
   },
   created() {

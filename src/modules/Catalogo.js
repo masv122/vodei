@@ -9,25 +9,34 @@ export default {
     _cargarPeliculas(state, peliculas) {
       state.peliculas = peliculas;
     },
-    agregarPelicula(state, pelicula) {
-      Vue.axios
+    _agregarPelicula(state, pelicula) {
+      state.peliculas.push(pelicula);
+    }
+  },
+  actions: {
+    agregarPelicula: async function({ commit }, pelicula) {
+      const resultado = await Vue.axios
         .post("/pelicula", pelicula)
         .then((res) => {
           if (res.data.error) {
-            alert(
-              "Ha ocurrido un error al ingresar la pelicula ",
-              res.data.error_object
-            );
+            return{
+              error : res.data.error,
+              error_object : res.data.error_object
+            }
           } else {
-            state.peliculas.push(pelicula);
+            commit('_agregarPelicula', pelicula)
+            return{
+              error : res.data.error
+            }
           }
         })
         .catch((e) => {
-          console.log(e);
+          return{
+            error : e
+          }
         });
+        return resultado;
     },
-  },
-  actions: {
     cargarPeliculas: async function({ commit }) {
       const peliculas = await Vue.axios
         .get("/pelicula")
