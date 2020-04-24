@@ -5,6 +5,7 @@ import Home from '../views/Home.vue'
 Vue.use(VueRouter)
 
 const routes = [
+
   {
     path: '/',
     name: 'Home',
@@ -29,6 +30,9 @@ const routes = [
   {
     path: '/contenido/agregar-pelicula/:tipo',
     name: 'Agregar Pelicula',
+    params: {
+        tipo: 0
+    },
     component: () => import('../views/AgregarPelicula.vue')
   },
   {

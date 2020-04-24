@@ -39,7 +39,7 @@ export default {
   },
   methods: {
     ...mapMutations(["addBreadcrumb"]),
-    ...mapActions("Catalogo", ["cargarPeliculas"])
+    ...mapActions("Catalogo", ["cargarPeliculas", "cargarSeries"])
   },
   created() {
     this.addBreadcrumb([
@@ -52,7 +52,8 @@ export default {
         to: { name: "Contenido" }
       }
     ]);
-    this.cargarPeliculas();
+    this.cargarSeries();
+    this.cargarPeliculas(0);
   }
 };
 </script>

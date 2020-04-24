@@ -2,23 +2,60 @@
   <div>
     <b-container class="border rounded" fluid>
       <b-nav class="my-2" pills>
-        <b-nav-item class="mt-4" active>Estrenos</b-nav-item>
-        <b-nav-item class="mt-4">Series</b-nav-item>
-        <b-nav-item class="mt-4">Contemporaneas</b-nav-item>
+        <b-nav-item
+          class="mt-4"
+          :active="botones[0] ? true : false"
+          @click="
+            cargarPeliculas(0);
+            setActivo(0);
+          "
+        >
+          Estrenos</b-nav-item
+        >
+        <b-nav-item
+          class="mt-4"
+          :active="botones[1] ? true : false"
+          @click="cargarSeries();
+          setActivo(1);"
+        >
+          Series</b-nav-item
+        >
+        <b-nav-item
+          class="mt-4"
+          :active="botones[2] ? true : false"
+          @click="
+            cargarPeliculas(1);
+            setActivo(2);
+          "
+        >
+          Contemporaneas</b-nav-item
+        >
         <div class="border rounded p-1">
           <b-dropdown-header
             >Selecciona el tipo de contenido a agregar</b-dropdown-header
           >
           <b-dropdown text="Agregar Peliculas">
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item :to="{name: 'Agregar Pelicula', params: {tipo: 0} }">Estreno</b-dropdown-item>
-            <b-dropdown-item :to="{name: 'Agregar Pelicula', params: {tipo: 1} }">Contempornea</b-dropdown-item>
+            <b-dropdown-item 
+              :to="{ name: 'Agregar Pelicula', params: { tipo: 0 } }"
+              >Estreno</b-dropdown-item
+            >
+            <b-dropdown-item 
+              :to="{ name: 'Agregar Pelicula', params: { tipo: 1 } }"
+              >Contempornea</b-dropdown-item
+            >
           </b-dropdown>
           <b-dropdown text="Agregar Series">
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item :to="{name: 'Agregar Serie'}">Serie</b-dropdown-item>
-            <b-dropdown-item :to="{name: 'Agregar Serie'}">Temporada</b-dropdown-item>
-            <b-dropdown-item :to="{name: 'Agregar Serie'}">Capitulo</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'Agregar Serie' }"
+              >Serie</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'Agregar Serie' }"
+              >Temporada</b-dropdown-item
+            >
+            <b-dropdown-item :to="{ name: 'Agregar Serie' }"
+              >Capitulo</b-dropdown-item
+            >
           </b-dropdown>
         </div>
         <b-nav-form class="ml-auto">
@@ -112,9 +149,10 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
+
 export default {
-  name: "NavFiltros",
+  name: "NavContenido",
   data() {
     return {
       selected: null,
@@ -125,12 +163,27 @@ export default {
         { value: { C: "3PO" }, text: "This is an option with object value" },
         { value: "d", text: "This one is disabled", disabled: true }
       ],
-      filtros: false
+      filtros: false,
+      botones: {
+        0: true,
+        1: false,
+        2: false
+      }
     };
   },
   methods: {
-    ...mapMutations(["addBreadcrumb"])
-  },
+    ...mapMutations(["addBreadcrumb"]),
+    ...mapActions("Catalogo", ["cargarPeliculas", "cargarSeries"]),
+    setActivo(boton) {
+      for (var item in this.botones) {
+        if (item == boton) {
+          this.botones[item] = true;
+        } else {
+          this.botones[item] = false;
+        }
+      }
+    }
+  }
 };
 </script>
 

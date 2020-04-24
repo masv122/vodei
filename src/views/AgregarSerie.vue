@@ -1,14 +1,32 @@
 <template>
   <div>
+    <b-modal id="ModalSerie" title="Confirme">
+      <ContenidoModalSerie :serie="retornaSerie()" />
+      <template v-slot:modal-footer="{ ok, cancel }">
+        <b-button
+          size="sm"
+          variant="success"
+          @click="
+            ok();
+            _agregarSerie();
+          "
+        >
+          Agregar
+        </b-button>
+        <b-button size="sm" variant="danger" @click="cancel()">
+          Cancelar
+        </b-button>
+      </template>
+    </b-modal>
     <b-container>
       <h1 class="display-4 my-3">
         <i class="fa fa-plus" aria-hidden="true"></i> Agregar Serie
       </h1>
-      <form>
+      <form @submit.prevent="">
         <b-form-row>
           <b-col cols-sm="12" cols-md="6">
             <b-form-group>
-              <b-form-group
+             <b-form-group
                 id="input-group-titulo"
                 label="Titulo:"
                 label-for="titulo"
@@ -17,6 +35,7 @@
                   id="titulo"
                   type="text"
                   required
+                  v-model="titulo"
                   placeholder="Ingrese Titulo"
                 >
                 </b-form-input>
@@ -28,8 +47,9 @@
               >
                 <b-form-select
                   id="idioma"
-                  v-model="selected"
-                  :options="options"
+                  v-model="idiomasSel"
+                  :options="idiomas"
+                  required
                 ></b-form-select>
               </b-form-group>
               <b-form-group
@@ -39,8 +59,9 @@
               >
                 <b-form-select
                   id="subtitulo"
-                  v-model="selected"
-                  :options="options"
+                  v-model="subtitulosSel"
+                  :options="subtitulos"
+                  required
                 ></b-form-select>
               </b-form-group>
               <b-form-group
@@ -51,6 +72,7 @@
                 <b-form-input
                   id="productora"
                   type="text"
+                  v-model="productora"
                   required
                   placeholder="Ingrese Productora"
                 >
@@ -64,22 +86,11 @@
                 <b-form-input
                   id="actores"
                   type="text"
+                  v-model="actores"
                   required
                   placeholder="Ingrese Actores"
                 >
                 </b-form-input>
-              </b-form-group>
-              <b-form-group>
-                <div class="mt-1">
-                  Portada Seleccionada: {{ file ? file.name : "" }}
-                </div>
-                <b-form-file
-                  v-model="file"
-                  accept="image/*"
-                  :state="Boolean(file)"
-                  placeholder="Selecciona una portada o arrastrala aqui..."
-                  drop-placeholder="Arrastrala aqui..."
-                ></b-form-file>
               </b-form-group>
             </b-form-group>
           </b-col>
@@ -93,8 +104,9 @@
                 <b-form-input
                   id="titulo-original"
                   type="text"
+                  v-model="tituloOriginal"
                   required
-                  placeholder="Ingrese Titulooriginal"
+                  placeholder="Ingrese Titulo original"
                 >
                 </b-form-input>
               </b-form-group>
@@ -105,19 +117,21 @@
               >
                 <b-form-select
                   id="genero"
-                  v-model="selected"
-                  :options="options"
+                  v-model="generoSel"
+                  :options="genero"
+                  required
                 ></b-form-select>
               </b-form-group>
-              <b-form-group
+               <b-form-group
                 id="input-group-pais"
                 label="Pais:"
                 label-for="pais"
               >
                 <b-form-select
                   id="pais"
-                  v-model="selected"
-                  :options="options"
+                  v-model="paisSel"
+                  :options="pais"
+                  required
                 ></b-form-select>
               </b-form-group>
               <b-form-group
@@ -125,48 +139,37 @@
                 label="Fecha de estreno:"
                 label-for="fecha"
               >
-                <b-form-input
-                  id="fecha"
-                  type="text"
-                  required
-                  placeholder="Ingrese Fecha de estreno"
-                >
-                </b-form-input>
+                <b-input-group class="mb-3">
+                  <b-form-input
+                    id="example-input"
+                    v-model="fecha"
+                    type="text"
+                    placeholder="YYYY-MM-DD"
+                  ></b-form-input>
+                  <b-input-group-append>
+                    <b-form-datepicker
+                      v-model="fecha"
+                      button-only
+                      right
+                      locale="es-ES"
+                      required
+                      aria-controls="example-input"
+                    ></b-form-datepicker>
+                  </b-input-group-append>
+                </b-input-group>
               </b-form-group>
-              <b-form-group
-                id="input-group-director"
-                label="Director:"
-                label-for="director"
-              >
-                <b-form-input
-                  id="director"
-                  type="text"
+              <b-form-group>
+                <div class="mt-1">
+                  Portada Seleccionada: {{ portada ? portada.name : "" }}
+                </div>
+                <b-form-file
+                  v-model="portada"
+                  accept="image/*"
+                  :state="Boolean(portada)"
+                  placeholder="Selecciona una portada o arrastrala aqui..."
+                  drop-placeholder="Arrastrala aqui..."
                   required
-                  placeholder="Ingrese Director"
-                >
-                </b-form-input>
-              </b-form-group>
-              <b-form-group
-                id="input-group-duracion"
-                label="Duracion:"
-                label-for="pais"
-              >
-                <b-row>
-                  <b-col cols="6">
-                    <b-form-select
-                      id="pais"
-                      v-model="selected"
-                      :options="options"
-                    ></b-form-select>
-                  </b-col>
-                  <b-col cols="6">
-                    <b-form-select
-                      id="pais"
-                      v-model="selected"
-                      :options="options"
-                    ></b-form-select>
-                  </b-col>
-                </b-row>
+                ></b-form-file>
               </b-form-group>
             </b-form-group>
           </b-col>
@@ -178,14 +181,20 @@
         >
           <b-form-textarea
             id="sinopsis"
-            v-model="text"
+            v-model="sinopsis"
             placeholder="Ingrese sinopsis..."
             rows="3"
+            required
             max-rows="6"
           ></b-form-textarea>
         </b-form-group>
         <b-form-group align="center">
-          <b-button block type="submit" variant="primary">
+          <b-button
+            block
+            variant="primary"
+            type="submit"
+            v-b-modal.ModalSerie
+          >
             Agregar
           </b-button>
           <b-button block type="reset" variant="danger">
@@ -198,28 +207,126 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import ContenidoModalSerie from "@/components/ContenidoModalSerie.vue";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 
 export default {
   name: "Serie",
   data() {
     return {
-      selected: null,
-      options: [
-        { value: null, text: "Please select an option" },
-        { value: "a", text: "This is First option" },
-        { value: "b", text: "Selected Option" },
-        { value: { C: "3PO" }, text: "This is an option with object value" },
-        { value: "d", text: "This one is disabled", disabled: true }
+      idiomasSel: null,
+      subtitulosSel: null,
+      generoSel: null,
+      paisSel: null,
+      idiomas: [
+        { value: null, text: "Por favor selecciona un idioma" },
+        { value: "es-LA", text: "Español Latino" },
+        { value: "es-ES", text: "Español España" },
+        { value: "en-US", text: "Ingles Nortea-Americano" },
+        { value: "en-UK", text: "Ingles Britanico" },
+        { value: "jap", text: "Japones" },
+        { value: "chn", text: "Chino" }
       ],
-      filtros: false,
-      file: null,
-      file2: null,
-      text: ""
+      subtitulos: [
+        { value: null, text: "Por favor selecciona un Subtitulo" },
+        { value: "es-LA", text: "Español Latino" },
+        { value: "es-ES", text: "Español España" },
+        { value: "en-US", text: "Ingles Nortea-Americano" },
+        { value: "en-UK", text: "Ingles Britanico" },
+        { value: "jap", text: "Japones" },
+        { value: "chn", text: "Chino" }
+      ],
+      genero: [
+        { value: null, text: "Por favor selecciona un Genero" },
+        { value: "Drama", text: "Drama" },
+        { value: "Accion", text: "Accion" },
+        { value: "Suspenso", text: "Suspenso" },
+        { value: "Ciencia Ficcion", text: "Ciencia Ficcion" },
+        { value: "No-binario", text: "No-Binario" }
+      ],
+      pais: [
+        { value: null, text: "Por favor selecciona un Pais" },
+        { value: "usa", text: "Estados Unidos" },
+        { value: "uk", text: "Reino Unido" },
+        { value: "en-US", text: "Ingles Nortea-Americano" },
+        { value: "en-UK", text: "Ingles Britanico" },
+        { value: "jap", text: "Japon" },
+        { value: "chn", text: "China" }
+      ],
+      portada: null,
+      titulo: "",
+      productora: "",
+      actores: "",
+      tituloOriginal: "",
+      fecha: "",
+      sinopsis: "",
+      id: 0
     };
   },
+  computed: {
+    ...mapGetters("Catalogo", ["series"])
+  },
   methods: {
-    ...mapMutations(["addBreadcrumb"])
+    ...mapMutations(["addBreadcrumb"]),
+    ...mapActions("Catalogo", ["agregarSerie"]),
+    retornaSerie() {
+      return {
+        id: this.series.length + 1,
+        titulo: this.titulo,
+        idioma: this.idiomasSel,
+        subtitulo: this.subtitulosSel,
+        productora: this.productora,
+        actores: this.actores,
+        tituloOriginal: this.tituloOriginal,
+        genero: this.generoSel,
+        pais: this.paisSel,
+        fecha: this.fecha,
+        portada: this.portada === null ? "" : this.portada.name,
+        sinopsis: this.sinopsis,
+        tipo: this.tipo
+      };
+    },
+    _agregarSerie() {
+      const resultado = this.agregarSerie(this.retornaSerie());
+      resultado.then(res => {
+        let mensaje = "";
+        let variant = "";
+        let icono = "";
+        if (res.error) {
+          mensaje = `No se pudo agregar la serie`;
+          variant = "danger";
+          icono = "fa-times";
+          alert(res.error_object);
+        } else {
+          mensaje = `Serie agregada satisfactoriamente`;
+          variant = "success";
+          icono = "fa-check";
+        }
+        const h = this.$createElement;
+        const vNodesMsg = h("p", { class: ["text-center", "mb-0"] }, [
+          h("i", { class: ["fa", icono] }),
+          ` ${mensaje}`
+        ]);
+        const vNodesTitle = h(
+          "div",
+          { class: ["d-flex", "flex-grow-1", "align-items-baseline", "mr-2"] },
+          [
+            h("strong", { class: "mr-2" }, "¡Nueva Notificacion!"),
+            h("small", { class: "ml-auto text-italics" }, "Ahora")
+          ]
+        );
+        this.$bvToast.toast([vNodesMsg], {
+          title: [vNodesTitle],
+          autoHideDelay: 5000,
+          toaster: "b-toaster-bottom-right",
+          appendToast: false,
+          variant: variant
+        });
+      });
+    }
+  },
+  components: {
+    ContenidoModalSerie,
   },
   created() {
     this.addBreadcrumb([

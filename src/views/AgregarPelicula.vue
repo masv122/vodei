@@ -295,7 +295,6 @@ export default {
     ...mapGetters("Catalogo", ["peliculas"])
   },
   methods: {
-    ...mapMutations("Catalogo", ["agregarPelicula"]),
     ...mapActions("Catalogo", ["agregarPelicula"]),
     ...mapMutations(["addBreadcrumb"]),
     retornaPelicula() {

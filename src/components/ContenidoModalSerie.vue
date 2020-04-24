@@ -1,0 +1,156 @@
+<template>
+  <div>
+    <form @submit.prevent="agregarSerie(retornaSerie())">
+      <b-form-row>
+        <b-col cols-sm="12" cols-md="6">
+          <b-form-group>
+            <b-form-group
+              id="input-group-titulo"
+              label="Titulo:"
+              label-for="titulo"
+            >
+              <b-form-input id="titulo" type="text" readonly v-model="titulo">
+              </b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="input-group-idioma"
+              label="Idioma:"
+              label-for="idioma"
+            >
+              <b-form-input
+                id="idioma"
+                v-model="idioma"
+                readonly
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="input-group-subtitulo"
+              label="Subtitulo:"
+              label-for="subtitulo"
+            >
+              <b-form-input
+                id="subtitulo"
+                v-model="subtitulo"
+                readonly
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="input-group-productora"
+              label="Productora:"
+              label-for="productora"
+            >
+              <b-form-input
+                id="productora"
+                type="text"
+                v-model="productora"
+                readonly
+              >
+              </b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="input-group-actores"
+              label="Actores:"
+              label-for="input-1"
+            >
+              <b-form-input id="actores" type="text" v-model="actores" readonly>
+              </b-form-input>
+            </b-form-group>
+          </b-form-group>
+        </b-col>
+        <b-col cols-sm="12" cols-md="6">
+          <b-form-group>
+            <b-form-group
+              id="input-group-titulo-original"
+              label="Titulo original:"
+              label-for="titulo-original"
+            >
+              <b-form-input
+                id="titulo-original"
+                type="text"
+                v-model="tituloOriginal"
+                readonly
+              >
+              </b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="input-group-genero"
+              label="Genero:"
+              label-for="genero"
+            >
+              <b-form-input
+                id="genero"
+                v-model="genero"
+                readonly
+              ></b-form-input>
+            </b-form-group>
+            <b-form-group id="input-group-pais" label="Pais:" label-for="pais">
+              <b-form-input id="pais" v-model="pais" readonly></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="input-group-fecha"
+              label="Fecha:"
+              label-for="fecha"
+            >
+              <b-form-input id="fecha" v-model="fecha" readonly></b-form-input>
+            </b-form-group>
+            <b-form-group
+              id="input-group-portadas"
+              label="Portada:"
+              label-for="portadas"
+            >
+              <b-form-input
+                id="portadas"
+                type="text"
+                v-model="portada"
+                readonly
+              >
+              </b-form-input>
+            </b-form-group>
+          </b-form-group>
+        </b-col>
+      </b-form-row>
+      <b-form-group
+        id="input-group-sinopsis"
+        label="Sinopsis:"
+        label-for="sinopsis"
+      >
+        <b-form-textarea
+          id="sinopsis"
+          v-model="sinopsis"
+          placeholder="Ingrese sinopsis..."
+          rows="3"
+          readonly
+          max-rows="6"
+        ></b-form-textarea>
+      </b-form-group>
+    </form>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ContenidoModalSerie",
+  props: {
+    serie: null,
+    type: Object
+  },
+  data() {
+    return {
+      titulo: this.serie.titulo,
+      idioma: this.serie.idioma,
+      subtitulo: this.serie.subtitulo,
+      productora: this.serie.productora,
+      actores: this.serie.actores,
+      tituloOriginal: this.serie.tituloOriginal,
+      genero: this.serie.genero,
+      pais: this.serie.pais,
+      fecha: this.serie.fecha,
+      portada: this.serie.portada,
+      sinopsis: this.serie.sinopsis
+    };
+  }
+};
+</script>
+
+<style lang="scss" scoped>
+</style>

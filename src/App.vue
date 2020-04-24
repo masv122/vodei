@@ -6,7 +6,9 @@
       <SupNav></SupNav>
       <b-container fluid>
         <Breadcrumb v-if="!loginVisible" />
-        <router-view />
+        <transition name="fade">
+          <router-view />
+        </transition>
       </b-container>
     </b-container>
     <BannerFooter v-if="!loginVisible" />
@@ -44,5 +46,13 @@ export default {
 <style scoped>
 .contenido {
   padding-left: 5rem;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
