@@ -3,7 +3,14 @@
     <b-modal id="ModalPelicula" title="Confirme">
       <ContenidoModalPelicula :pelicula="retornaPelicula()" />
       <template v-slot:modal-footer="{ ok, cancel }">
-        <b-button size="sm" variant="success" @click="ok();_agregarPelicula()">
+        <b-button
+          size="sm"
+          variant="success"
+          @click="
+            ok();
+            _agregarPelicula();
+          "
+        >
           Agregar
         </b-button>
         <b-button size="sm" variant="danger" @click="cancel()">
@@ -12,6 +19,14 @@
       </template>
     </b-modal>
     <b-container>
+          <div>
+      <b-img
+        class="contenido_image"
+        fluid
+        src="@/assets/svg/undraw_new_entries_nh3h.svg"
+        alt="Responsive image"
+      ></b-img>
+    </div>
       <h1 class="display-4 my-3">
         <i class="fa fa-plus" aria-hidden="true"></i> Agregar Pelicula
       </h1>
@@ -285,7 +300,7 @@ export default {
     };
   },
   computed: {
-     ...mapGetters("Catalogo", ["peliculas"])
+    ...mapGetters("Catalogo", ["peliculas"])
   },
   methods: {
     ...mapMutations("Catalogo", ["agregarPelicula"]),
@@ -310,24 +325,43 @@ export default {
         tipo: this.tipo
       };
     },
-    _agregarPelicula(){
-        const resultado = this.agregarPelicula(this.retornaPelicula());
-        resultado.then(res => {
-          var mensaje = '';
-          if(res.error){
-            mensaje = 'No se pudo agregar la pelicula';
-            alert(res.error_object);
-          }
-          else{
-            mensaje = 'Pelicula agregada satisfactoriamente';
-          }
-          this.$bvToast.toast(mensaje, {
-          title: "Aviso",
+    _agregarPelicula() {
+      const resultado = this.agregarPelicula(this.retornaPelicula());
+      resultado.then(res => {
+        let mensaje = "";
+        let variant = "";
+        let icono = "";
+        if (res.error) {
+          mensaje = `No se pudo agregar la pelicula`;
+          variant = "danger";
+          icono = "fa-times";
+          alert(res.error_object);
+        } else {
+          mensaje = `Pelicula agregada satisfactoriamente`;
+          variant = "success";
+          icono = "fa-check";
+        }
+        const h = this.$createElement;
+        const vNodesMsg = h("p", { class: ["text-center", "mb-0"] }, [
+          h("i", { class: ["fa", icono] }),
+          ` ${mensaje}`
+        ]);
+        const vNodesTitle = h(
+          "div",
+          { class: ["d-flex", "flex-grow-1", "align-items-baseline", "mr-2"] },
+          [
+            h("strong", { class: "mr-2" }, "¡Nueva Notificacion!"),
+            h("small", { class: "ml-auto text-italics" }, "Ahora")
+          ]
+        );
+        this.$bvToast.toast([vNodesMsg], {
+          title: [vNodesTitle],
           autoHideDelay: 5000,
-          appendToast: true,
+          toaster: "b-toaster-bottom-right",
+          appendToast: false,
+          variant: variant
         });
-
-        })
+      });
     }
   },
   created() {
@@ -353,4 +387,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.contenido_image {
+  position: absolute;
+  height: 30rem;
+  z-index: -1;
+  margin-left: 10rem;
+}
 </style>

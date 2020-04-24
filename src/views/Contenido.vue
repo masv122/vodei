@@ -1,13 +1,19 @@
 <template>
   <div>
-    <section>
-      <div>
-        <Jumbotron titulo="Contenido" :pieTitulo="pieTitulo"/>
-        <NavContenido />
-        <Catalogo />
-        <Paginacion />
-      </div>
-    </section>
+    <Jumbotron titulo="Contenido" :pieTitulo="pieTitulo" />
+    <NavContenido />
+    <div>
+      <b-img
+        class="contenido_image"
+        fluid
+        src="@/assets/svg/undraw_reviewed_docs_neeb.svg"
+        alt="Responsive image"
+      ></b-img>
+    </div>
+    <div>
+      <Catalogo />
+      <Paginacion />
+    </div>
   </div>
 </template>
 
@@ -21,8 +27,9 @@ export default {
   name: "Contenido",
   data() {
     return {
-      pieTitulo: "En este apartado podras navegar por todo el catalogo que ofrece Vodei asi como agregar nuevo contenido o modifcarlo"
-    }
+      pieTitulo:
+        "En este apartado podras navegar por todo el catalogo que ofrece Vodei asi como agregar nuevo contenido o modifcarlo"
+    };
   },
   components: {
     Catalogo,
@@ -32,7 +39,7 @@ export default {
   },
   methods: {
     ...mapMutations(["addBreadcrumb"]),
-    ...mapActions("Catalogo", ["cargarPeliculas"]),
+    ...mapActions("Catalogo", ["cargarPeliculas"])
   },
   created() {
     this.addBreadcrumb([
@@ -51,4 +58,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.contenido_image {
+  position: absolute;
+  height: 30rem;
+  z-index: -1;
+  margin-left: 10rem;
+}
 </style>

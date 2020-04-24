@@ -3,6 +3,7 @@ export default {
   namespaced: true,
   state: {
     peliculas: [],
+    peliculasFiltradas: [],
     series: [],
   },
   mutations: {
@@ -11,6 +12,9 @@ export default {
     },
     _agregarPelicula(state, pelicula) {
       state.peliculas.push(pelicula);
+    },
+    filtrarPeliculas(state, texto){
+      state.peliculasFiltradas =state.peliculas.filter(item => item.titulo.includes(texto));
     }
   },
   actions: {
