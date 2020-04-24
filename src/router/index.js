@@ -27,7 +27,7 @@ const routes = [
     component: () => import('../views/Login.vue')
   },
   {
-    path: '/contenido/agregar-pelicula',
+    path: '/contenido/agregar-pelicula/:tipo',
     name: 'Agregar Pelicula',
     component: () => import('../views/AgregarPelicula.vue')
   },

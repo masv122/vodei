@@ -1,23 +1,13 @@
 <template>
   <div>
     <b-toast id="toast" static no-auto-hide> </b-toast>
-    <b-container fluid>
-      <b-row>
-        <b-col
-          v-if="!loginVisible"
-          class="navLateral bg-success shadow"
-          cols="1"
-        >
-          <LateralNav />
-        </b-col>
-        <b-col class="contenido pb-5" :cols="loginVisible ? 12 : 11">
-          <SupNav></SupNav>
-          <b-container fluid>
-            <Breadcrumb v-if="!loginVisible" />
-            <router-view />
-          </b-container>
-        </b-col>
-      </b-row>
+    <LateralNav v-if="!loginVisible" />
+    <b-container fluid class="contenido">
+      <SupNav></SupNav>
+      <b-container fluid>
+        <Breadcrumb v-if="!loginVisible" />
+        <router-view />
+      </b-container>
     </b-container>
     <BannerFooter v-if="!loginVisible" />
   </div>
@@ -52,12 +42,7 @@ export default {
 </script>
 
 <style scoped>
-.contenido,
-.navLateral {
-  padding-left: unset;
-  padding-right: unset;
-}
-.navLateral {
-  padding-left: 2rem;
+.contenido {
+  padding-left: 5rem;
 }
 </style>

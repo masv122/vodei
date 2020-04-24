@@ -11,8 +11,8 @@
           >
           <b-dropdown text="Agregar Peliculas">
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item :to="{name: 'Agregar Pelicula'}">Estreno</b-dropdown-item>
-            <b-dropdown-item :to="{name: 'Agregar Pelicula'}">Contempornea</b-dropdown-item>
+            <b-dropdown-item :to="{name: 'Agregar Pelicula', params: {tipo: 0} }">Estreno</b-dropdown-item>
+            <b-dropdown-item :to="{name: 'Agregar Pelicula', params: {tipo: 1} }">Contempornea</b-dropdown-item>
           </b-dropdown>
           <b-dropdown text="Agregar Series">
             <b-dropdown-divider></b-dropdown-divider>

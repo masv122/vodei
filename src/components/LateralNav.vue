@@ -1,69 +1,72 @@
 <template>
   <div>
-    <b-navbar-nav
-      vertical
-      class="nav_lateral"
-      align="center"
-    >
-      <b-nav-item :to="{ name: 'Contenido' }">
-        <div class="contenedor_items">
-          <div class="icono-items" id="icono-items">
-            <a :to="{ name: 'Contenido' }"
-              ><i class="fa fa-map" aria-hidden="true"></i
-            ></a>
-          </div></div
-      ></b-nav-item>
-      <b-nav-item :to="{ name: 'Salas y Funciones' }"
-        ><div class="contenedor_items">
-          <div class="icono-items" id="icono-items">
-            <a :to="{ name: 'Salas y Funciones' }"
-              ><i class="fa fa-film" aria-hidden="true"></i
-            ></a>
-          </div></div
-      ></b-nav-item>
-      <b-nav-item :to="{ name: 'Contenido en Emision' }"
-        ><div class="contenedor_items">
-          <div class="icono-items" id="icono-items">
-            <a :to="{ name: 'Contenido en Emision' }"
-              ><i class="fa fa-star" aria-hidden="true"></i
-            ></a>
-          </div></div></b-nav-item
-      ><b-nav-item :to="{ name: 'Tienda' }"
-        ><div class="contenedor_items">
-          <div class="icono-items" id="icono-items">
-            <a :to="{ name: 'Tienda' }"
-              ><i class="fa fa-shopping-cart" aria-hidden="true"></i
-            ></a>
-          </div></div
-      ></b-nav-item>
-      <b-nav-item :to="{ name: 'Pagos' }"
-        ><div class="contenedor_items">
-          <div class="icono-items" id="icono-items">
-            <a :to="{ name: 'Pagos' }"
-              ><i class="fa fa-credit-card" aria-hidden="true"></i
-            ></a>
-          </div></div
-      ></b-nav-item>
-      <b-nav-item :to="{ name: 'Mensajes' }">
-        <div class="contenedor_items">
-          <div class="icono-items" id="icono-items">
-            <a :to="{ name: 'Mensajes' }"
-              ><i class="fa fa-envelope" aria-hidden="true"></i
-            ></a>
-          </div></div
-      ></b-nav-item>
-      <b-nav-item :to="{ name: 'Usuarios' }">
-        <div class="contenedor_items">
-          <div class="icono-items" id="icono-items">
-            <a href=""><i class="fa fa-users" aria-hidden="true"></i></a>
-          </div></div
-      ></b-nav-item>
-      <b-nav-item>
-        <div class="contenedor_items">
-          <div class="icono-items" id="icono-items">
-            <a href=""><i class="fas fa-user-friends"></i></a>
-          </div></div
-      ></b-nav-item>
+    <b-navbar-nav vertical class="nav_lateral h-100" align="center">
+      <b-nav-item
+        :to="{ name: 'Contenido' }"
+        @click="activar(1)"
+        :class="['contenedor_items', botones[1] ? 'activado' : '']"
+      >
+        <a :to="{ name: 'Contenido' }"
+          ><i class="fa fa-map" aria-hidden="true"></i
+        ></a>
+      </b-nav-item>
+      <b-nav-item
+        :to="{ name: 'Salas y Funciones' }"
+        :class="['contenedor_items', botones[2] ? 'activado' : '']"
+        @click="activar(2)"
+      >
+        <a :to="{ name: 'Salas y Funciones' }"
+          ><i class="fa fa-film" aria-hidden="true"></i
+        ></a>
+      </b-nav-item>
+      <b-nav-item
+        :to="{ name: 'Contenido en Emision' }"
+        :class="['contenedor_items', botones[3] ? 'activado' : '']"
+        @click="activar(3)"
+      >
+        <a :to="{ name: 'Contenido en Emision' }"
+          ><i class="fa fa-star" aria-hidden="true"></i
+        ></a> </b-nav-item
+      ><b-nav-item
+        :to="{ name: 'Tienda' }"
+        :class="['contenedor_items', botones[4] ? 'activado' : '']"
+        @click="activar(4)"
+      >
+        <a :to="{ name: 'Tienda' }"
+          ><i class="fa fa-shopping-cart" aria-hidden="true"></i
+        ></a>
+      </b-nav-item>
+      <b-nav-item
+        :to="{ name: 'Pagos' }"
+        :class="['contenedor_items', botones[5] ? 'activado' : '']"
+        @click="activar(5)"
+      >
+        <a :to="{ name: 'Pagos' }"
+          ><i class="fa fa-credit-card" aria-hidden="true"></i
+        ></a>
+      </b-nav-item>
+      <b-nav-item
+        :to="{ name: 'Mensajes' }"
+        :class="['contenedor_items', botones[6] ? 'activado' : '']"
+        @click="activar(6)"
+      >
+        <a :to="{ name: 'Mensajes' }"
+          ><i class="fa fa-envelope" aria-hidden="true"></i
+        ></a>
+      </b-nav-item>
+      <b-nav-item
+        :to="{ name: 'Usuarios' }"
+        :class="['contenedor_items', botones[7] ? 'activado' : '']"
+        @click="activar(7)"
+      >
+        <a href=""><i class="fa fa-users" aria-hidden="true"></i></a>
+      </b-nav-item>
+      <b-nav-item
+        :class="['contenedor_items', botones[8] ? 'activado' : '']"
+        @click="activar(8)"
+      >
+        <a href=""><i class="fas fa-user-friends"></i></a>
+      </b-nav-item>
     </b-navbar-nav>
   </div>
 </template>
@@ -71,6 +74,20 @@
 <script>
 export default {
   name: "LateralNav",
+  data() {
+    return {
+      botones: {
+        1: false,
+        2: false,
+        3: false,
+        4: false,
+        5: false,
+        6: false,
+        7: false,
+        8: false
+      }
+    };
+  },
   created() {
     window.addEventListener("scroll", this.posicionScroll);
   },
@@ -78,7 +95,15 @@ export default {
     window.removeEventListener("scroll", this.posicionScroll);
   },
   methods: {
-
+    activar(boton) {
+      for (var key in this.botones) {
+        if (key == boton) {
+          this.botones[key] = true;
+        } else {
+          this.botones[key] = false;
+        }
+      }
+    }
   }
 };
 </script>
@@ -89,22 +114,22 @@ export default {
   color: #fff;
   position: fixed;
   transition: 0.5s ease;
-  top: 6%;
   font-size: 0.74rem;
+  background-color: #009870;
+  z-index: 1000;
+  width: 60px;
 }
-.contenedor_items {
-  padding-bottom: 0.5rem;
-}
-.contenedor_items a,
-.nav_bar_contenido_y_filtro a {
-  text-decoration: none;
+.contenedor_items a {
+  font-size: 2rem;
   color: #fff;
 }
-.contenedor_items a:hover,
-.nav_bar_contenido_y_filtro a:hover {
-  color: #eee;
+.activado {
+  border-right: 4px solid #9a980b;
 }
-.icono-items {
-  font-size: 2rem;
+.contenedor_items:hover {
+  border-right: 4px solid #fff;
+}
+.contenedor_items a:hover {
+  color: #9a980b;
 }
 </style>

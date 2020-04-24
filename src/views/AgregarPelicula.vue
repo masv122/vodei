@@ -19,14 +19,6 @@
       </template>
     </b-modal>
     <b-container>
-          <div>
-      <b-img
-        class="contenido_image"
-        fluid
-        src="@/assets/svg/undraw_new_entries_nh3h.svg"
-        alt="Responsive image"
-      ></b-img>
-    </div>
       <h1 class="display-4 my-3">
         <i class="fa fa-plus" aria-hidden="true"></i> Agregar Pelicula
       </h1>
@@ -295,7 +287,7 @@ export default {
       duracion: "",
       fecha: "",
       sinopsis: "",
-      tipo: 0,
+      tipo: this.$route.params.tipo,
       id: 0
     };
   },
