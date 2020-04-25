@@ -1,4 +1,5 @@
 import Vue from "vue";
+import getFormData from "../mixin/getFormData"
 export default {
   namespaced: true,
   state: {
@@ -31,7 +32,11 @@ export default {
   actions: {
     agregarPelicula: async function({ commit }, pelicula) {
       const resultado = await Vue.axios
-        .post("/pelicula", pelicula)
+        .post("/pelicula", getFormData(pelicula), {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((res) => {
           if (res.data.error) {
             return {
@@ -54,7 +59,11 @@ export default {
     },
     agregarSerie: async function({ commit }, serie) {
       const resultado = await Vue.axios
-        .post("/serie", serie)
+        .post("/serie", getFormData(serie), {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
         .then((res) => {
           if (res.data.error) {
             return {
@@ -104,7 +113,7 @@ export default {
           return e;
         });
       commit("_cargarSeries", series);
-    }
+    },
   },
   getters: {
     catalogo: (state) => {

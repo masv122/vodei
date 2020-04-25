@@ -281,7 +281,7 @@ export default {
         genero: this.generoSel,
         pais: this.paisSel,
         fecha: this.fecha,
-        portada: this.portada === null ? "" : this.portada.name,
+        portada: this.portada === null ? "" : this.portada,
         sinopsis: this.sinopsis,
         tipo: this.tipo
       };

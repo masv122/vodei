@@ -6,10 +6,10 @@
       footer-tag="footer"
       border-variant="info"
       align="center"
-      :img-src="require(`@/assets/portadas/${portada}`)"
+      :img-src="`http://localhost:3000/uploads/portadas/${portada}`"
+      style="width: 100%;"
     >
-      <b-card-text>
-      </b-card-text>
+      <b-card-text> </b-card-text>
       <template v-slot:footer>
         <b-button :to="{ name: 'Detalles Contenido' }" variant="primary"
           >Detalles</b-button
@@ -22,18 +22,19 @@
 <script>
 export default {
   name: "ContenidoIndividual",
-    props: {
-      titulo: {
-        type: String,
-        default: ""
-      },
-      portada: {
-        type: String,
-        default: "poster-joker-2-1567010576 (1).jpg"
-      }
+  props: {
+    titulo: {
+      type: String,
+      default: ""
+    },
+    portada: {
+      type: String,
+      default: ""
     }
+  }
 };
 </script>
 
 <style lang="scss" scoped>
+
 </style>

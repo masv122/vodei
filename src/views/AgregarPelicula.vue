@@ -311,7 +311,7 @@ export default {
         fecha: this.fecha,
         director: this.director,
         duracion: this.duracion,
-        portada: this.portada === null ? "" : this.portada.name,
+        portada: this.portada === null ? "" : this.portada,
         sinopsis: this.sinopsis,
         tipo: this.tipo
       };
@@ -326,7 +326,7 @@ export default {
           mensaje = `No se pudo agregar la pelicula`;
           variant = "danger";
           icono = "fa-times";
-          alert(res.error_object);
+          console.log(res.error_object);
         } else {
           mensaje = `Pelicula agregada satisfactoriamente`;
           variant = "success";

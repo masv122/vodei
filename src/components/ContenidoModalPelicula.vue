@@ -174,7 +174,7 @@ export default {
       fecha: this.pelicula.fecha,
       director: this.pelicula.director,
       duracion: this.pelicula.duracion,
-      portada: this.pelicula.portada,
+      portada: this.pelicula.portada.name,
       sinopsis: this.pelicula.sinopsis
     };
   }

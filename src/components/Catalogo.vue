@@ -3,7 +3,7 @@
     <b-container fluid class="p-2">
       <b-row>
         <b-col v-for="(contenido, index) in catalogo" v-bind:key="index" cols="3">
-          <ContenidoIndividual :titulo='contenido.Titulo'/>
+          <ContenidoIndividual :titulo='contenido.Titulo' :portada='contenido.Portada'/>
         </b-col>
       </b-row>
     </b-container>

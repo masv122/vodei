@@ -145,7 +145,7 @@ export default {
       genero: this.serie.genero,
       pais: this.serie.pais,
       fecha: this.serie.fecha,
-      portada: this.serie.portada,
+      portada: this.serie.portada.name,
       sinopsis: this.serie.sinopsis
     };
   }
