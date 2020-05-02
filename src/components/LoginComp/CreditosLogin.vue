@@ -11,12 +11,12 @@
       <div>
         <h4 id="creditos">Desarrollado por</h4>
         <img
-          src="@/assets//logo_icono_lunar_software.png"
+          src="@/assets/logo_icono_lunar_software.svg"
           width="100px"
           alt="logo_lunar_software"
         />
                 <img
-          src="@/assets/logo_letras_lunar_software.png"
+          src="@/assets/logo_letras_lunar_software.svg"
           width="100px"
           alt="logo_lunar_software"
         />

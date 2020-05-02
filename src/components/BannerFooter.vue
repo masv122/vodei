@@ -21,12 +21,12 @@
           <b-col cols="4">
             <div class="creditos pl-5 pt-2">
               <img
-                src="@/assets/logo_icono_lunar_software.png"
+                src="@/assets/logo_icono_lunar_software.svg"
                 width="40px"
                 alt="logo_lunar_software"
               />
               <img
-                src="@/assets/logo_letras_lunar_software.png"
+                src="@/assets/logo_letras_lunar_software.svg"
                 width="160px"
                 alt="logo_lunar_software"
               />

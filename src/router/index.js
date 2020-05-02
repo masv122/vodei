@@ -41,6 +41,11 @@ const routes = [
     component: () => import('../views/AgregarSerie.vue')
   },
   {
+    path: '/contenido/agregar-temporada',
+    name: 'Agregar Temporada',
+    component: () => import('../views/AgregarTemporada.vue')
+  },
+  {
     path: '/contenido/detalles-contenido',
     name: 'Detalles Contenido',
     component: () => import('../views/DetallesContenido.vue')
