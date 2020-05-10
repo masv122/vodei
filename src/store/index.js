@@ -1,6 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
-import Catalogo from '@/modules/Catalogo';
+import Catalogo from "@/modules/Catalogo";
 
 Vue.use(Vuex);
 
@@ -9,32 +9,51 @@ export default new Vuex.Store({
     vistaPagos: true,
     breadcrumb: [],
     tabSalasFunciones: true,
-    loginVisible: true
+    loginVisible: true,
+    servidor: false,
   },
   mutations: {
-    cargarDatos(state, datos){
+    cargarDatos(state, datos) {
       state.peliculas = datos;
     },
-    setvistaPagos(state){
-      state.vistaPagos = !state.vistaPagos
+    setvistaPagos(state) {
+      state.vistaPagos = !state.vistaPagos;
     },
-    addBreadcrumb(state, rutas){
+    addBreadcrumb(state, rutas) {
       state.breadcrumb = rutas;
     },
-    setTabSalasFunciones(state, estado){
-      state.tabSalasFunciones= estado;
+    setTabSalasFunciones(state, estado) {
+      state.tabSalasFunciones = estado;
     },
-    setloginVisible(state, estado){
+    setloginVisible(state, estado) {
       state.loginVisible = estado;
-    }
+    },
+    updateServidor(state, res) {
+      state.servidor = res;
+    },
   },
-  actions: {},
+  actions: {
+    updateServidor: async function({ commit }) {
+      const res = Vue.axios
+        .get("/")
+        .then(() => {
+          return true;
+        })
+        .catch(() => {
+          return false;
+        });
+      commit("updateServidor", res);
+    },
+  },
   getters: {
-    loginVisible: state => {
+    loginVisible: (state) => {
       return state.loginVisible;
+    },
+    servidor: (state) => {
+      return state.servidor;
     }
   },
   modules: {
-    Catalogo
+    Catalogo,
   },
 });

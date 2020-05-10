@@ -1,6 +1,10 @@
 <template>
   <div>
     <b-toast id="toast" static no-auto-hide> </b-toast>
+    <b-alert variant="danger" class="text-center" :show="servidor">
+      <i class="fa fa-times" aria-hidden="true"></i>
+      Servidor fuera de linea
+    </b-alert>
     <LateralNav v-if="!loginVisible" />
     <b-container fluid class="contenido">
       <SupNav></SupNav>
@@ -20,7 +24,7 @@ import SupNav from "@/components/SupNav.vue";
 import LateralNav from "@/components/LateralNav.vue";
 import Breadcrumb from "@/components/Breadcrumb.vue";
 import BannerFooter from "@/components/BannerFooter.vue";
-import { mapMutations, mapGetters } from "vuex";
+import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   components: {
     SupNav,
@@ -28,17 +32,19 @@ export default {
     Breadcrumb,
     BannerFooter
   },
+  data() {
+    return {
+    };
+  },
   computed: {
-    ...mapGetters(["loginVisible"])
+    ...mapGetters(["loginVisible", "servidor"])
   },
   methods: {
-    ...mapMutations(["cargarDatos"])
+    ...mapMutations(["cargarDatos"]),
+    ...mapActions(["updateServidor"]),
   },
-  created: function() {
-    let datos = JSON.parse(localStorage.getItem("PeliculasDB"));
-    if (datos != null) {
-      this.cargarDatos(datos);
-    }
+  created() {
+
   }
 };
 </script>

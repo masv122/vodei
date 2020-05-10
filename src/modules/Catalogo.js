@@ -1,32 +1,47 @@
 import Vue from "vue";
-import getFormData from "../mixin/getFormData"
+import getFormData from "../mixin/getFormData";
 export default {
   namespaced: true,
   state: {
     catalogo: [],
     peliculas: [],
     series: [],
-    peliculasFiltradas: [],
+    contenidoFiltrado: null,
+    contenido: null,
+    temporadas: [],
+    serie: null,
   },
   mutations: {
-    _cargarPeliculas(state, peliculas) {
+    cargarPeliculas(state, peliculas) {
       state.peliculas = peliculas;
       state.catalogo = state.peliculas;
     },
-    _cargarSeries(state, series) {
+    cargarSeries(state, series) {
       state.series = series;
       state.catalogo = state.series;
     },
-    _agregarPelicula(state, pelicula) {
+    agregarPelicula(state, pelicula) {
       state.peliculas.push(pelicula);
     },
-    _agregarSerie(state, serie) {
+    agregarSerie(state, serie) {
       state.series.push(serie);
     },
-    filtrarPeliculas(state, texto) {
-      state.peliculasFiltradas = state.peliculas.filter((item) =>
-        item.titulo.includes(texto)
+    agregarTemporada(state, temporada) {
+      state.temporadas.push(temporada);
+    },
+    updateContenidoFiltrado(state, param) {
+      state.contenidoFiltrado = param.contenido.filter((item) =>
+        item.Titulo.toLowerCase().includes(param.texto.toLowerCase())
       );
+    },
+    updateContenido(state, contenido) {
+      state.contenido = contenido;
+    },
+    updateTemporadas(state, temporadas) {
+      state.temporadas = temporadas;
+    },
+    modifySerie(state, serie) {
+      state.serie = serie;
     },
   },
   actions: {
@@ -44,7 +59,7 @@ export default {
               error_object: res.data.error_object,
             };
           } else {
-            commit("_agregarPelicula", pelicula);
+            commit("agregarPelicula", pelicula);
             return {
               error: res.data.error,
             };
@@ -71,7 +86,37 @@ export default {
               error_object: res.data.error_object,
             };
           } else {
-            commit("_agregarSerie", serie);
+            commit("agregarSerie", serie);
+            return {
+              error: res.data.error,
+            };
+          }
+        })
+        .catch((e) => {
+          return {
+            error: e,
+          };
+        });
+      return resultado;
+    },
+    agregarTemporada: async function({ commit, dispatch }, temporada) {
+      const resultado = await Vue.axios
+        .post("/temporada", temporada)
+        .then((res) => {
+          if (res.data.error) {
+            return {
+              error: res.data.error,
+              error_object: res.data.error_object,
+            };
+          } else {
+            commit("agregarTemporada", temporada);
+            dispatch("updateSerie", temporada.id_serie).then((res) => {
+              const serie = res;
+              serie.nTemp++;
+              dispatch("modifySerie", serie);
+              dispatch("cargarSeries", null);
+              commit("updateContenido", null);
+            });
             return {
               error: res.data.error,
             };
@@ -97,7 +142,7 @@ export default {
         .catch((e) => {
           return e;
         });
-      commit("_cargarPeliculas", peliculas);
+      commit("cargarPeliculas", peliculas);
     },
     cargarSeries: async function({ commit }) {
       const series = await Vue.axios
@@ -112,7 +157,56 @@ export default {
         .catch((e) => {
           return e;
         });
-      commit("_cargarSeries", series);
+      commit("cargarSeries", series);
+    },
+    updateTemporadas: async function({ commit }) {
+      const temporadas = await Vue.axios
+        .get("/temporada")
+        .then((res) => {
+          if (res.data.error) {
+            return res.data.error.error_object;
+          } else {
+            return res.data.temporadas;
+          }
+        })
+        .catch((e) => {
+          return e;
+        });
+      commit("updateTemporadas", temporadas);
+    },
+    modifySerie: async function({ commit }, serie) {
+      Vue.axios
+        .put(`/serie/${serie.id_serie}`, serie)
+        .then((res) => {
+          if (res.data.error) {
+            return res.data.error.error_object;
+          } else {
+            return res.data.temporadas;
+          }
+        })
+        .catch((e) => {
+          return e;
+        });
+      commit("modifySerie", serie);
+    },
+    updateSerie: async function({ commit }, id) {
+      const serie = Vue.axios
+        .get(`/serie/${id}`)
+        .then((res) => {
+          if (res.data.error) {
+            return null;
+          } else {
+            return res.data.serie;
+          }
+        })
+        .catch((e) => {
+          return e;
+        });
+      commit("modifySerie", serie);
+      return serie;
+    },
+    updateContenido({ commit }, contenido) {
+      commit("updateContenido", contenido);
     },
   },
   getters: {
@@ -124,6 +218,18 @@ export default {
     },
     peliculas: (state) => {
       return state.peliculas;
+    },
+    contenido: (state) => {
+      return state.contenido;
+    },
+    contenidoFiltrado: (state) => {
+      return state.contenidoFiltrado;
+    },
+    temporadas: (state) => {
+      return state.temporadas;
+    },
+    serie: (state) => {
+      return state.serie;
     },
   },
 };

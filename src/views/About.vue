@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+  
     <b-container>
       <form @submit.prevent="">
         <!-- <input type="file" @change="onFileChange" name="" id="" /> -->

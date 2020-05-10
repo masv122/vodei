@@ -10,7 +10,7 @@
           </b-col>
           <b-col cols="4">
             <img
-              :src="require(`@/assets/vodei_logo.png`)"
+              :src="require('@/assets/vodei administrador.png')"
               class="figure-img mt-5"
               width="260px"
               alt="vodei_logo"
@@ -38,10 +38,6 @@ export default {
 }
 
 .jumbotron img {
-  padding: 0.25rem;
-  background-color: #fff;
-  border: 0.25rem solid #2a8d11;
-  border-radius: 50%;
   max-width: 100%;
   height: auto;
 }

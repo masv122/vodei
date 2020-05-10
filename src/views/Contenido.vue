@@ -18,8 +18,8 @@
 </template>
 
 <script>
-import Catalogo from "@/components/Catalogo.vue";
-import NavContenido from "@/components/NavContenido.vue";
+import Catalogo from "@/components/ContenidoComp/Catalogo.vue";
+import NavContenido from "@/components/ContenidoComp/NavContenido.vue";
 import Paginacion from "@/components/Paginacion.vue";
 import Jumbotron from "@/components/Jumbotron.vue";
 import { mapMutations, mapActions } from "vuex";

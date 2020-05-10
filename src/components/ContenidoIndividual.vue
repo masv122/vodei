@@ -9,8 +9,8 @@
       :img-src="`http://localhost:3000/uploads/portadas/${portada}`"
       style="width: 100%;"
     >
-      <b-card-text> </b-card-text>
-      <template v-slot:footer>
+      <b-card-text>Numero de temporadas: {{nTemp}}</b-card-text>
+      <template v-slot:footer v-if="detalles">
         <b-button :to="{ name: 'Detalles Contenido' }" variant="primary"
           >Detalles</b-button
         >
@@ -30,6 +30,14 @@ export default {
     portada: {
       type: String,
       default: ""
+    },
+    nTemp: {
+      type: Number,
+      default: 0
+    },
+    detalles: {
+      type: Boolean,
+      default: true
     }
   }
 };

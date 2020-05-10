@@ -30,9 +30,6 @@ const routes = [
   {
     path: '/contenido/agregar-pelicula/:tipo',
     name: 'Agregar Pelicula',
-    params: {
-        tipo: 0
-    },
     component: () => import('../views/AgregarPelicula.vue')
   },
   {
