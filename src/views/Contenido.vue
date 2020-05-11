@@ -3,14 +3,6 @@
     <Jumbotron titulo="Contenido" :pieTitulo="pieTitulo" />
     <NavContenido />
     <div>
-      <b-img
-        class="contenido_image"
-        fluid
-        src="@/assets/svg/undraw_reviewed_docs_neeb.svg"
-        alt="Responsive image"
-      ></b-img>
-    </div>
-    <div>
       <Catalogo />
       <Paginacion />
     </div>

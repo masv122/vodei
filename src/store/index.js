@@ -11,6 +11,7 @@ export default new Vuex.Store({
     tabSalasFunciones: true,
     loginVisible: true,
     servidor: false,
+    conErr: false,
   },
   mutations: {
     cargarDatos(state, datos) {
@@ -31,15 +32,22 @@ export default new Vuex.Store({
     updateServidor(state, res) {
       state.servidor = res;
     },
+    updateConErr(state, res) {
+      state.conErr = res;
+    },
   },
   actions: {
     updateServidor: async function({ commit }) {
-      const res = Vue.axios
+      commit("updateConErr", false);
+      commit("updateServidor", false);
+      const res = await Vue.axios
         .get("/")
         .then(() => {
+          commit("updateConErr", false);
           return true;
         })
         .catch(() => {
+          commit("updateConErr", true);
           return false;
         });
       commit("updateServidor", res);
@@ -51,7 +59,10 @@ export default new Vuex.Store({
     },
     servidor: (state) => {
       return state.servidor;
-    }
+    },
+    conErr: (state) => {
+      return state.conErr;
+    },
   },
   modules: {
     Catalogo,

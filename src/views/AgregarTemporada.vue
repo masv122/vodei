@@ -79,7 +79,7 @@
                 </b-input-group-addon>
               </b-input-group>
               <ListaContenido
-                :contenidos="filtro === '' ? series : contenidoFiltrado"
+                :contenidos="catalogo" 
               />
             </b-form-group>
             <div v-else>
@@ -95,6 +95,7 @@
                 :portada="contenido.portada"
                 :nTemp="contenido.nTemp"
                 :detalles="false"
+                tContenido="1"
               ></ContenidoIndividual>
             </div>
           </b-col>
@@ -151,18 +152,18 @@ export default {
     ...mapGetters("Catalogo", [
       "series",
       "contenido",
-      "contenidoFiltrado",
+      "catalogo",
       "temporadas"
     ])
   },
   methods: {
     ...mapActions("Catalogo", [
       "updateContenido",
-      "updateContenidoFiltrado",
       "updateTemporadas",
-      "agregarTemporada"
+      "agregarTemporada",
+      "cargarSeries"
     ]),
-    ...mapMutations("Catalogo", ["updateContenidoFiltrado"]),
+    ...mapMutations("Catalogo", ["filtrarContenido"]),
     getTemporada() {
       return {
         idTemporada: this.temporadas.length,
@@ -171,7 +172,7 @@ export default {
       };
     },
     filtrar() {
-      this.updateContenidoFiltrado({
+      this.filtrarContenido({
         contenido: this.series,
         texto: this.filtro
       });

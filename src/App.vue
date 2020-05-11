@@ -1,21 +1,83 @@
 <template>
   <div>
     <b-toast id="toast" static no-auto-hide> </b-toast>
-    <b-alert variant="danger" class="text-center" :show="servidor">
-      <i class="fa fa-times" aria-hidden="true"></i>
-      Servidor fuera de linea
-    </b-alert>
-    <LateralNav v-if="!loginVisible" />
-    <b-container fluid class="contenido">
-      <SupNav></SupNav>
-      <b-container fluid>
-        <Breadcrumb v-if="!loginVisible" />
-        <transition name="fade">
-          <router-view />
-        </transition>
+    <b-overlay
+      v-if="!servidor"
+      show
+      rounded="sm"
+      spinner-type="grow"
+      class="overlay"
+    >
+      <template v-slot:overlay>
+        <div class="text-center" v-if="!conErr">
+          <h4 class="display-4 mt-4">
+            Conectando con el servidor...
+          </h4>
+          <b-img
+            src="@/assets/vodei server logo.png"
+            class="serverLogo text-center mt-4"
+            fluid
+            alt="Responsive image"
+          ></b-img>
+          <div class="mt-4">
+            <b-spinner
+              variant="success"
+              type="grow"
+              label="Spinning"
+            ></b-spinner>
+            <b-spinner
+              variant="success"
+              type="grow"
+              label="Spinning"
+            ></b-spinner>
+            <b-spinner
+              variant="success"
+              type="grow"
+              label="Spinning"
+            ></b-spinner>
+            <b-spinner
+              variant="success"
+              type="grow"
+              label="Spinning"
+            ></b-spinner>
+            <b-spinner
+              variant="success"
+              type="grow"
+              label="Spinning"
+            ></b-spinner>
+          </div>
+        </div>
+        <div class="text-center" v-else>
+          <h4 class="display-4 mt-4">
+            Conexion Fallida
+          </h4>
+          <b-img
+            src="@/assets/vodei server logo.png"
+            class="serverLogo text-center mt-4"
+            fluid
+            alt="Responsive image"
+          ></b-img>
+          <div class="mt-3">
+            <b-button variant="success" class="ml-2" @click="updateServidor">
+              <i class="fas fa-redo    "></i> Reconectar
+            </b-button>
+          </div>
+        </div>
+      </template>
+    </b-overlay>
+    <div v-if="servidor">
+      <LateralNav v-if="!loginVisible" />
+      <b-container fluid class="contenido">
+        <SupNav></SupNav>
+        <b-container fluid>
+          <Breadcrumb v-if="!loginVisible" />
+          <transition name="fade">
+            <router-view />
+          </transition>
+        </b-container>
       </b-container>
-    </b-container>
-    <BannerFooter v-if="!loginVisible" />
+      <BannerFooter v-if="!loginVisible" />
+    </div>
   </div>
 </template>
 
@@ -33,18 +95,17 @@ export default {
     BannerFooter
   },
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
-    ...mapGetters(["loginVisible", "servidor"])
+    ...mapGetters(["loginVisible", "servidor", "conErr"])
   },
   methods: {
     ...mapMutations(["cargarDatos"]),
-    ...mapActions(["updateServidor"]),
+    ...mapActions(["updateServidor"])
   },
   created() {
-
+    this.updateServidor();
   }
 };
 </script>
@@ -60,5 +121,15 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+.overlay {
+  margin-top: 18rem;
+}
+.conectando {
+  display: inline-block;
+  justify-content: center;
+}
+.serverLogo {
+  width: 5rem;
 }
 </style>

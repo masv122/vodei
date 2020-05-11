@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="shadow my-2 py-2">
     <b-modal id="ModalPelicula" title="Confirme">
       <ContenidoModalPelicula :pelicula="retornaPelicula()" />
       <template v-slot:modal-footer="{ ok, cancel }">

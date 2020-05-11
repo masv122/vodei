@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-container class="border rounded" fluid>
+    <b-container class="shadow rounded" fluid>
       <b-nav class="my-2" pills>
         <b-nav-item
           class="mt-4"
@@ -8,6 +8,7 @@
           @click="
             cargarPeliculas(0);
             setActivo(0);
+            modifyTContenido(0);
           "
         >
           Estrenos</b-nav-item
@@ -15,8 +16,11 @@
         <b-nav-item
           class="mt-4"
           :active="botones[1] ? true : false"
-          @click="cargarSeries();
-          setActivo(1);"
+          @click="
+            cargarSeries();
+            setActivo(1);
+            modifyTContenido(1);
+          "
         >
           Series</b-nav-item
         >
@@ -36,11 +40,11 @@
           >
           <b-dropdown text="Agregar Peliculas">
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item 
+            <b-dropdown-item
               :to="{ name: 'Agregar Pelicula', params: { tipo: 0 } }"
               >Estreno</b-dropdown-item
             >
-            <b-dropdown-item 
+            <b-dropdown-item
               :to="{ name: 'Agregar Pelicula', params: { tipo: 1 } }"
               >Contempornea</b-dropdown-item
             >
@@ -62,7 +66,7 @@
           <b-input-group>
             <template v-slot:append>
               <b-button-group>
-                <b-button variant="outline-info"
+                <b-button variant="outline-info" @click="filtrar()"
                   ><i class="fa fa-search" aria-hidden="true"></i>
                   Buscar</b-button
                 >
@@ -72,7 +76,12 @@
                 >
               </b-button-group>
             </template>
-            <b-form-input type="text" placeholder="Buscar" v-model="findText"></b-form-input>
+            <b-form-input
+              type="text"
+              placeholder="Buscar"
+              v-model="findText"
+              @keyup="filtrar()"
+            ></b-form-input>
           </b-input-group>
         </b-nav-form>
       </b-nav>
@@ -149,7 +158,7 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
   name: "NavContenido",
@@ -169,11 +178,15 @@ export default {
         1: false,
         2: false
       },
-      findText: ''
+      findText: ""
     };
+  },
+  computed: {
+    ...mapGetters("Catalogo", ["series", "peliculas"])
   },
   methods: {
     ...mapMutations(["addBreadcrumb"]),
+    ...mapMutations("Catalogo", ["modifyTContenido", "filtrarContenido"]),
     ...mapActions("Catalogo", ["cargarPeliculas", "cargarSeries"]),
     setActivo(boton) {
       for (var item in this.botones) {
@@ -182,6 +195,25 @@ export default {
         } else {
           this.botones[item] = false;
         }
+      }
+    },
+    filtrar() {
+
+      if (this.botones[0]) {
+        this.filtrarContenido({
+          contenido: this.peliculas,
+          texto: this.findText
+        });
+      } else if (this.botones[1]) {
+        this.filtrarContenido({
+          contenido: this.series,
+          texto: this.findText
+        });
+      } else {
+        this.filtrarContenido({
+          contenido: this.peliculas,
+          texto: this.findText
+        });
       }
     }
   }

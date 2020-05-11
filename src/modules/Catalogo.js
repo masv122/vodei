@@ -6,10 +6,10 @@ export default {
     catalogo: [],
     peliculas: [],
     series: [],
-    contenidoFiltrado: null,
     contenido: null,
     temporadas: [],
     serie: null,
+    tcontenido: 0,
   },
   mutations: {
     cargarPeliculas(state, peliculas) {
@@ -29,9 +29,9 @@ export default {
     agregarTemporada(state, temporada) {
       state.temporadas.push(temporada);
     },
-    updateContenidoFiltrado(state, param) {
-      state.contenidoFiltrado = param.contenido.filter((item) =>
-        item.Titulo.toLowerCase().includes(param.texto.toLowerCase())
+    filtrarContenido(state, params) {
+      state.catalogo = params.contenido.filter((item) =>
+        item.Titulo.toLowerCase().includes(params.texto.toLowerCase())
       );
     },
     updateContenido(state, contenido) {
@@ -42,6 +42,9 @@ export default {
     },
     modifySerie(state, serie) {
       state.serie = serie;
+    },
+    modifyTContenido(state, tContenido) {
+      state.tContenido = tContenido;
     },
   },
   actions: {
@@ -231,5 +234,8 @@ export default {
     serie: (state) => {
       return state.serie;
     },
+    tContenido: (state) => {
+      return state.tContenido;
+    }
   },
 };

@@ -4,12 +4,12 @@
       :title="titulo"
       header-tag="header"
       footer-tag="footer"
-      border-variant="info"
       align="center"
       :img-src="`http://localhost:3000/uploads/portadas/${portada}`"
       style="width: 100%;"
+      class="shadow"
     >
-      <b-card-text>Numero de temporadas: {{nTemp}}</b-card-text>
+      <b-card-text v-if="tContenido === 1">Numero de temporadas: {{nTemp}}</b-card-text>
       <template v-slot:footer v-if="detalles">
         <b-button :to="{ name: 'Detalles Contenido' }" variant="primary"
           >Detalles</b-button
@@ -38,6 +38,10 @@ export default {
     detalles: {
       type: Boolean,
       default: true
+    },
+    tContenido: {
+      type: Number,
+      default: 0
     }
   }
 };
