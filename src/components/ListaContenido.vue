@@ -33,25 +33,31 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 export default {
   name: "ListaContenido",
   props: {
     contenidos: {
       type: Array,
       default: null
+    },
+    tContenido: {
+      type: Number,
+      default: 0
     }
   },
   data() {
     return {
       state: "not_accepted"
-    }
+    };
   },
   methods: {
     selContenido(index) {
-        this.updateContenido(this.contenidos[index])
+      this.updateContenido(this.contenidos[index]);
+      this.updateTemporadas(this.contenidos[index].id)
     },
-    ...mapActions('Catalogo', ['updateContenido'])
+    ...mapActions("Catalogo", ["updateTemporadas"]),
+    ...mapMutations("Catalogo", ["updateContenido"]),
   }
 };
 </script>

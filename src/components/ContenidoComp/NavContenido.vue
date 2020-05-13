@@ -57,7 +57,7 @@
             <b-dropdown-item :to="{ name: 'Agregar Temporada' }"
               >Temporada</b-dropdown-item
             >
-            <b-dropdown-item :to="{ name: 'Agregar Serie' }"
+            <b-dropdown-item :to="{ name: 'Agregar Capitulo' }"
               >Capitulo</b-dropdown-item
             >
           </b-dropdown>

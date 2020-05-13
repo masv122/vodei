@@ -301,7 +301,7 @@ export default {
     ...mapMutations(["addBreadcrumb"]),
     retornaPelicula() {
       return {
-        id: this.peliculas.length + 1,
+        id: "mov-" + this.peliculas.length,
         titulo: this.titulo,
         idioma: this.idiomasSel,
         subtitulo: this.subtitulosSel,

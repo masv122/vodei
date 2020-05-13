@@ -53,14 +53,18 @@
       <h1 class="display-4 my-3">
         <i class="fa fa-plus" aria-hidden="true"></i> Agregar Temporada
       </h1>
-      <form @submit.prevent="agregarTemporada(getTemporada)">
+      <form @submit.prevent="">
         <b-form-row>
           <b-col cols-sm="12" cols-md="4">
+            <b-alert variant="warning" show v-if="series.length === 0">
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+              No hay series registradas.
+            </b-alert>
             <b-form-group
               id="input-group-serie"
               label="Serie:"
               label-for="serie"
-              v-if="contenido == null"
+              v-else-if="contenido == null"
             >
               <b-input-group>
                 <b-form-input
@@ -78,28 +82,41 @@
                   </b-button>
                 </b-input-group-addon>
               </b-input-group>
-              <ListaContenido
-                :contenidos="catalogo" 
-              />
+              <ListaContenido :contenidos="series" />
             </b-form-group>
             <div v-else>
-              <b-button
-                class="float-right"
-                variant="primary"
-                @click="updateContenido(null)"
-              >
-                Deseleccionar
+              <b-button variant="danger" block @click="reiniciarSerie()">
+                <i class="fa fa-times" aria-hidden="true"></i>
               </b-button>
               <ContenidoIndividual
                 :titulo="contenido.Titulo"
                 :portada="contenido.portada"
                 :nTemp="contenido.nTemp"
                 :detalles="false"
-                tContenido="1"
+                :tContenido="1"
               ></ContenidoIndividual>
             </div>
           </b-col>
-          <b-col cols-sm="12" cols-md="8">
+          <b-col cols-sm="12" cols-md="4">
+            <div class="border-bottom mb-2">
+              <label>Temporadas</label>
+            </div>
+            <b-alert variant="warning" show v-if="contenido == null">
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+              Seleccione una serie.
+            </b-alert>
+            <b-alert variant="warning" show v-else-if="temporadas.length === 0">
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+              La serie no posee temporadas aun.
+            </b-alert>            
+            <ListaTemporadas
+              v-else
+              :temporadas="temporadas"
+              :seleccionable="false"
+              class="overflow-auto listas"
+            />
+          </b-col>
+          <b-col cols-sm="12" cols-md="4">
             <b-form-group
               align="center"
               id="input-group-temporada"
@@ -111,22 +128,21 @@
                 type="text"
                 required
                 v-model="titulo"
-                placeholder="Ingrese el nombre de la temporada"
               >
               </b-form-input>
-              <b-button
-                block
-                variant="primary"
-                type="submit"
-                :disabled="contenido == null"
-                v-b-modal.ModalPelicula
-              >
-                Agregar
-              </b-button>
-              <b-button block type="reset" variant="danger">
-                Cancelar
-              </b-button>
             </b-form-group>
+            <b-button
+              block
+              variant="primary"
+              type="submit"
+              :disabled="contenido == null"
+              v-b-modal.ModalPelicula
+            >
+              Agregar
+            </b-button>
+            <b-button block type="reset" variant="danger">
+              Cancelar
+            </b-button>
           </b-col>
         </b-form-row>
       </form>
@@ -138,6 +154,7 @@
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import ListaContenido from "@/components/ListaContenido.vue";
 import ContenidoIndividual from "@/components/ContenidoIndividual.vue";
+import ListaTemporadas from "@/components/ListaTemporadas.vue";
 import notificacion from "@/mixin/notificacion";
 export default {
   name: "AgregarTemporada",
@@ -152,23 +169,23 @@ export default {
     ...mapGetters("Catalogo", [
       "series",
       "contenido",
-      "catalogo",
-      "temporadas"
+      "temporadas",
+      "temporada"
     ])
   },
   methods: {
-    ...mapActions("Catalogo", [
+    ...mapActions("Catalogo", ["agregarTemporada", "cargarSeries"]),
+    ...mapMutations("Catalogo", [
+      "filtrarContenido",
       "updateContenido",
-      "updateTemporadas",
-      "agregarTemporada",
-      "cargarSeries"
+      "updateTemporadas"
     ]),
-    ...mapMutations("Catalogo", ["filtrarContenido"]),
+    ...mapMutations(["addBreadcrumb"]),
     getTemporada() {
       return {
-        idTemporada: this.temporadas.length,
-        id_serie: this.contenido.id_serie,
-        Titulo: this.titulo
+        id: "temp-" + this.contenido.id + "-" + this.temporadas.length,
+        id_serie: this.contenido.id,
+        titulo: this.titulo
       };
     },
     filtrar() {
@@ -182,14 +199,32 @@ export default {
       resultado.then(res => {
         this.show(res, "Temporada");
       });
+    },
+    reiniciarSerie() {
+      this.updateContenido(null);
+      this.updateTemporadas([]);
     }
+  },
+  created() {
+    this.addBreadcrumb([
+      {
+        text: "Home",
+        to: { name: "Home" }
+      },
+      {
+        text: "Contenido",
+        to: { name: "Contenido" }
+      },
+      {
+        text: "Agregar Temporada",
+        to: { name: "Agregar Temporada" }
+      }
+    ]);
   },
   components: {
     ListaContenido,
-    ContenidoIndividual
-  },
-  created() {
-    this.updateTemporadas();
+    ContenidoIndividual,
+    ListaTemporadas
   }
 };
 </script>

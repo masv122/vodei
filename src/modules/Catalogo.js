@@ -6,9 +6,12 @@ export default {
     catalogo: [],
     peliculas: [],
     series: [],
-    contenido: null,
     temporadas: [],
+    capitulos: [],
+    contenido: null,
     serie: null,
+    temporada: null,
+    capitulo: null,
     tcontenido: 0,
   },
   mutations: {
@@ -29,6 +32,9 @@ export default {
     agregarTemporada(state, temporada) {
       state.temporadas.push(temporada);
     },
+    agregarCapitulo(state, capitulo) {
+      state.capitulos.push(capitulo);
+    },
     filtrarContenido(state, params) {
       state.catalogo = params.contenido.filter((item) =>
         item.Titulo.toLowerCase().includes(params.texto.toLowerCase())
@@ -40,11 +46,17 @@ export default {
     updateTemporadas(state, temporadas) {
       state.temporadas = temporadas;
     },
+    updateCapitulos(state, capitulos) {
+      state.capitulos = capitulos;
+    },
     modifySerie(state, serie) {
       state.serie = serie;
     },
     modifyTContenido(state, tContenido) {
       state.tContenido = tContenido;
+    },
+    updateTemporada(state, temporada) {
+      state.temporada = temporada;
     },
   },
   actions: {
@@ -118,7 +130,37 @@ export default {
               serie.nTemp++;
               dispatch("modifySerie", serie);
               dispatch("cargarSeries", null);
-              commit("updateContenido", null);
+              commit("updateContenido", serie);
+            });
+            return {
+              error: res.data.error,
+            };
+          }
+        })
+        .catch((e) => {
+          return {
+            error: e,
+          };
+        });
+      return resultado;
+    },
+    agregarCapitulo: async function({ commit, dispatch }, capitulo) {
+      const resultado = await Vue.axios
+        .post("/capitulo", capitulo)
+        .then((res) => {
+          if (res.data.error) {
+            return {
+              error: res.data.error,
+              error_object: res.data.error_object,
+            };
+          } else {
+            commit("agregarCapitulo", capitulo);
+            dispatch("updateSerie", capitulo.idSerie).then((res) => {
+              const serie = res;
+              serie.nCap++;
+              dispatch("modifySerie", serie);
+              dispatch("cargarSeries", null);
+              commit("updateContenido", serie);
             });
             return {
               error: res.data.error,
@@ -162,9 +204,10 @@ export default {
         });
       commit("cargarSeries", series);
     },
-    updateTemporadas: async function({ commit }) {
+    updateTemporadas: async function({ commit }, id) {
+      const ruta = id == null ? "/temporada" : `/temporada-serie/${id}`;
       const temporadas = await Vue.axios
-        .get("/temporada")
+        .get(ruta)
         .then((res) => {
           if (res.data.error) {
             return res.data.error.error_object;
@@ -177,9 +220,25 @@ export default {
         });
       commit("updateTemporadas", temporadas);
     },
+    updateCapitulos: async function({ commit }, id) {
+      const ruta = id == null ? "/capitulo" : `/capitulos-temporada/${id}`;
+      const capitulos = await Vue.axios
+        .get(ruta)
+        .then((res) => {
+          if (res.data.error) {
+            return res.data.error.error_object;
+          } else {
+            return res.data.capitulos;
+          }
+        })
+        .catch((e) => {
+          return e;
+        });
+      commit("updateCapitulos", capitulos);
+    },
     modifySerie: async function({ commit }, serie) {
       Vue.axios
-        .put(`/serie/${serie.id_serie}`, serie)
+        .put(`/serie/${serie.id}`, serie)
         .then((res) => {
           if (res.data.error) {
             return res.data.error.error_object;
@@ -208,8 +267,21 @@ export default {
       commit("modifySerie", serie);
       return serie;
     },
-    updateContenido({ commit }, contenido) {
-      commit("updateContenido", contenido);
+    updateTemporada: async function({ commit }, id) {
+      const temporada = Vue.axios
+        .get(`/temporada/${id}`)
+        .then((res) => {
+          if (res.data.error) {
+            return null;
+          } else {
+            return res.data.temporada;
+          }
+        })
+        .catch((e) => {
+          return e;
+        });
+      commit("updateTemporada", temporada);
+      return temporada;
     },
   },
   getters: {
@@ -231,11 +303,17 @@ export default {
     temporadas: (state) => {
       return state.temporadas;
     },
+    capitulos: (state) => {
+      return state.capitulos;
+    },
     serie: (state) => {
       return state.serie;
     },
     tContenido: (state) => {
       return state.tContenido;
-    }
+    },
+    temporada: (state) => {
+      return state.temporada;
+    },
   },
 };

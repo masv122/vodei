@@ -272,7 +272,7 @@ export default {
     ...mapActions("Catalogo", ["agregarSerie"]),
     retornaSerie() {
       return {
-        id: this.series.length + 1,
+        id: "ser-" + this.series.length,
         titulo: this.titulo,
         idioma: this.idiomasSel,
         subtitulo: this.subtitulosSel,
