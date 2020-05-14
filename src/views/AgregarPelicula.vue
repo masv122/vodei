@@ -215,14 +215,23 @@
           ></b-form-textarea>
         </b-form-group>
         <b-form-group align="center">
-          <b-button
-            block
-            variant="primary"
-            type="submit"
-            v-b-modal.ModalPelicula
+          <b-overlay
+            :show="cargando"
+            rounded
+            opacity="0.6"
+            spinner-small=""
+            spinner-variant="primary"
+            class="d-inline-blocks"
           >
-            Agregar
-          </b-button>
+            <b-button
+              block
+              variant="primary"
+              type="submit"
+              v-b-modal.ModalPelicula
+            >
+              Agregar
+            </b-button>
+          </b-overlay>
           <b-button block type="reset" variant="danger">
             Restablecer
           </b-button>
@@ -291,11 +300,13 @@ export default {
       fecha: "",
       sinopsis: "",
       tipo: this.$route.params.tipo,
-      id: "",
+      id: ""
     };
   },
   computed: {
-    ...mapGetters("Catalogo", ["peliculas"])
+    ...mapGetters("Catalogo", ["peliculas"]),
+    ...mapGetters(["cargando"])
+
   },
   methods: {
     ...mapActions("Catalogo", ["agregarPelicula"]),
@@ -319,15 +330,15 @@ export default {
         tipo: this.tipo
       };
     },
-     _agregarPelicula() {
+    _agregarPelicula() {
       const resultado = this.agregarPelicula(this.retornaPelicula());
-      resultado.then( (res) => {
+      resultado.then(res => {
         this.show(res, "Pelicula");
-        this.id ++;
+        this.id++;
       });
     }
   },
-  async beforeMount () {
+  async beforeMount() {
     this.id = await this.count();
   },
   created() {

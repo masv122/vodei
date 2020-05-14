@@ -26,7 +26,7 @@
         <b-form-row>
           <b-col cols-sm="12" cols-md="6">
             <b-form-group>
-             <b-form-group
+              <b-form-group
                 id="input-group-titulo"
                 label="Titulo:"
                 label-for="titulo"
@@ -122,7 +122,7 @@
                   required
                 ></b-form-select>
               </b-form-group>
-               <b-form-group
+              <b-form-group
                 id="input-group-pais"
                 label="Pais:"
                 label-for="pais"
@@ -189,14 +189,23 @@
           ></b-form-textarea>
         </b-form-group>
         <b-form-group align="center">
-          <b-button
-            block
-            variant="primary"
-            type="submit"
-            v-b-modal.ModalSerie
+          <b-overlay
+            :show="cargando"
+            rounded
+            opacity="0.6"
+            spinner-small=""
+            spinner-variant="primary"
+            class="d-inline-blocks"
           >
-            Agregar
-          </b-button>
+            <b-button
+              block
+              variant="primary"
+              type="submit"
+              v-b-modal.ModalSerie
+            >
+              Agregar
+            </b-button>
+          </b-overlay>
           <b-button block type="reset" variant="danger">
             Restablecer
           </b-button>
@@ -265,7 +274,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("Catalogo", ["series"])
+    ...mapGetters("Catalogo", ["series"]),
+    ...mapGetters(["cargando"])
   },
   methods: {
     ...mapMutations(["addBreadcrumb"]),
@@ -290,12 +300,12 @@ export default {
     _agregarSerie() {
       const resultado = this.agregarSerie(this.retornaSerie());
       resultado.then(res => {
-        this.show(res, 'Serie')
+        this.show(res, "Serie");
       });
     }
   },
   components: {
-    ContenidoModalSerie,
+    ContenidoModalSerie
   },
   created() {
     this.addBreadcrumb([

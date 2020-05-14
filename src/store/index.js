@@ -13,6 +13,7 @@ export default new Vuex.Store({
     servidor: false,
     conErr: false,
     cargando: false,
+    loadingViews: false,
   },
   mutations: {
     cargarDatos(state, datos) {
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     setCargando(state) {
       state.cargando = !state.cargando;
     },
+    setLoadingViews(state) {
+      state.loadingViews = !state.loadingViews;
+    },
   },
   actions: {
     updateServidor: async function({ commit }) {
@@ -58,16 +62,11 @@ export default new Vuex.Store({
     },
   },
   getters: {
-    loginVisible: (state) => {
-      return state.loginVisible;
-    },
-    servidor: (state) => {
-      return state.servidor;
-    },
-    conErr: (state) => {
-      return state.conErr;
-    },
+    loginVisible: (state) => state.loginVisible,
+    servidor: (state) => state.servidor,
+    conErr: (state) => state.conErr,
     cargando: (state) => state.cargando,
+    loadingViews: (state) => state.loadingViews,
   },
   modules: {
     Catalogo,

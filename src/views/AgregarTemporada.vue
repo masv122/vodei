@@ -106,9 +106,9 @@
               Seleccione una serie.
             </b-alert>
             <b-alert variant="warning" show v-else-if="temporadas.length === 0">
-              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> 
+              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
               La serie no posee temporadas aun.
-            </b-alert>            
+            </b-alert>
             <ListaTemporadas
               v-else
               :temporadas="temporadas"
@@ -131,15 +131,24 @@
               >
               </b-form-input>
             </b-form-group>
-            <b-button
-              block
-              variant="primary"
-              type="submit"
-              :disabled="contenido == null"
-              v-b-modal.ModalPelicula
+            <b-overlay
+              :show="cargando"
+              rounded
+              opacity="0.6"
+              spinner-small=""
+              spinner-variant="primary"
+              class="d-inline-blocks"
             >
-              Agregar
-            </b-button>
+              <b-button
+                block
+                variant="primary"
+                type="submit"
+                :disabled="contenido == null"
+                v-b-modal.ModalPelicula
+              >
+                Agregar
+              </b-button>
+            </b-overlay>
             <b-button block type="reset" variant="danger">
               Cancelar
             </b-button>
@@ -172,7 +181,8 @@ export default {
       "temporadas",
       "temporada",
       "catalogo"
-    ])
+    ]),
+    ...mapGetters(["cargando"])
   },
   methods: {
     ...mapActions("Catalogo", ["agregarTemporada", "cargarSeries"]),

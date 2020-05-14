@@ -95,20 +95,20 @@
             </b-form-group>
           </b-col>
         </b-form-row>
-          <b-form-group
-            align="center"
-            id="input-group-director-modal"
-            label="Director"
-            label-for="director-modal"
+        <b-form-group
+          align="center"
+          id="input-group-director-modal"
+          label="Director"
+          label-for="director-modal"
+        >
+          <b-form-input
+            id="director-modal"
+            type="text"
+            readonly
+            v-model="director"
           >
-            <b-form-input
-              id="director-modal"
-              type="text"
-              readonly
-              v-model="director"
-            >
-            </b-form-input>
-          </b-form-group>
+          </b-form-input>
+        </b-form-group>
       </b-form>
       <template v-slot:modal-footer="{ ok, cancel }">
         <b-button
@@ -130,7 +130,7 @@
       <h1 class="display-4 my-3">
         <i class="fa fa-plus" aria-hidden="true"></i> Informacion del capitulo
       </h1>
-      <form @submit.prevent="">
+      <form @submit.prevent="" ref="form">
         <b-form-row>
           <b-col cols-sm="12" cols-md="4">
             <b-alert variant="warning" show v-if="series.length === 0">
@@ -268,6 +268,14 @@
                 </b-form-input>
               </b-form-group>
             </b-form-group>
+            <b-overlay
+              :show="cargando"
+              rounded
+              opacity="0.6"
+              spinner-small=""
+              spinner-variant="primary"
+              class="d-inline-blocks"
+            >
             <b-button
               block
               variant="primary"
@@ -277,6 +285,7 @@
             >
               Agregar
             </b-button>
+            </b-overlay>
             <b-button block type="reset" variant="danger">
               Cancelar
             </b-button>
@@ -334,10 +343,15 @@ export default {
       "temporadas",
       "temporada",
       "capitulos"
-    ])
+    ]),
+    ...mapGetters(["cargando"])
   },
   methods: {
-    ...mapActions("Catalogo", ["updateTemporadas", "agregarCapitulo", "cargarSeries"]),
+    ...mapActions("Catalogo", [
+      "updateTemporadas",
+      "agregarCapitulo",
+      "cargarSeries"
+    ]),
     ...mapMutations("Catalogo", [
       "filtrarContenido",
       "updateContenido",
