@@ -38,50 +38,50 @@ export default {
       portada: null
     };
   },
-  methods: {
-    enviar() {
-      console.log(this.retornaPortada());
-      this.axios
-        .post("/upload", this.retornaPortada())
-        .then(res => {
-          console.log(res);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    cargarImagen(e) {
-     var files = e.target.files || e.dataTransfer.files;
-      if (!files.length) return;
-      this.verImagen(files[0])
-      let fd = new FormData();
-      fd.append("image", files[0]);
-      this.axios
-        .post("/upload", fd, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        })
-        .then(res => {
-          console.log(res);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    },
-    verImagen(file) {
-      var reader = new FileReader();
-      reader.onload = e => {
-        this.image = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    },
-    retornaPortada() {
-      return {
-        image: this.image === null ? "" : this.image
-      };
-    }
-  },
+  // methods: {
+  //   enviar() {
+  //     console.log(this.retornaPortada());
+  //     this.axios
+  //       .post("/upload", this.retornaPortada())
+  //       .then(res => {
+  //         console.log(res);
+  //       })
+  //       .catch(e => {
+  //         console.log(e);
+  //       });
+  //   },
+  //   cargarImagen(e) {
+  //    var files = e.target.files || e.dataTransfer.files;
+  //     if (!files.length) return;
+  //     this.verImagen(files[0])
+  //     let fd = new FormData();
+  //     fd.append("image", files[0]);
+  //     this.axios
+  //       .post("/upload", fd, {
+  //         headers: {
+  //           'Content-Type': 'multipart/form-data'
+  //         }
+  //       })
+  //       .then(res => {
+  //         console.log(res);
+  //       })
+  //       .catch(e => {
+  //         console.log(e);
+  //       });
+  //   },
+  //   verImagen(file) {
+  //     var reader = new FileReader();
+  //     reader.onload = e => {
+  //       this.image = e.target.result;
+  //     };
+  //     reader.readAsDataURL(file);
+  //   },
+  //   retornaPortada() {
+  //     return {
+  //       image: this.image === null ? "" : this.image
+  //     };
+  //   }
+  // },
   computed: {}
 };
 </script>
