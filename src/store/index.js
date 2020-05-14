@@ -12,6 +12,7 @@ export default new Vuex.Store({
     loginVisible: true,
     servidor: false,
     conErr: false,
+    cargando: false,
   },
   mutations: {
     cargarDatos(state, datos) {
@@ -34,6 +35,9 @@ export default new Vuex.Store({
     },
     updateConErr(state, res) {
       state.conErr = res;
+    },
+    setCargando(state) {
+      state.cargando = !state.cargando;
     },
   },
   actions: {
@@ -63,6 +67,7 @@ export default new Vuex.Store({
     conErr: (state) => {
       return state.conErr;
     },
+    cargando: (state) => state.cargando,
   },
   modules: {
     Catalogo,
