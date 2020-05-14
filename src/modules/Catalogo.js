@@ -283,6 +283,7 @@ export default {
       commit("updateTemporada", temporada);
       return temporada;
     },
+    
   },
   getters: {
     catalogo: (state) => {

@@ -157,7 +157,7 @@
                   </b-button>
                 </b-input-group-addon>
               </b-input-group>
-              <ListaContenido :contenidos="series" />
+              <ListaContenido :contenidos="catalogo" />
             </b-form-group>
             <div v-else>
               <b-button variant="danger" block @click="reiniciarSerie()">
@@ -337,7 +337,7 @@ export default {
     ])
   },
   methods: {
-    ...mapActions("Catalogo", ["updateTemporadas", "agregarCapitulo"]),
+    ...mapActions("Catalogo", ["updateTemporadas", "agregarCapitulo", "cargarSeries"]),
     ...mapMutations("Catalogo", [
       "filtrarContenido",
       "updateContenido",
@@ -391,6 +391,7 @@ export default {
     ListaCapitulos
   },
   created() {
+    this.cargarSeries();
     this.addBreadcrumb([
       {
         text: "Home",

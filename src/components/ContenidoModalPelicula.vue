@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form @submit.prevent="agregarPelicula(retornaPelicula())">
+    <form @submit.prevent="">
       <b-form-row>
         <b-col cols-sm="12" cols-md="6">
           <b-form-group>
@@ -158,8 +158,7 @@
 export default {
   name: "ContenidoModalPelicula",
   props: {
-    pelicula: null,
-    type: Object
+    pelicula: null
   },
   data() {
     return {

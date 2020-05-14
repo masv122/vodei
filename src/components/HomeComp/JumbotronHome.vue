@@ -10,7 +10,7 @@
           </b-col>
           <b-col cols="4">
             <img
-              :src="require('@/assets/vodei administrador.png')"
+              src="@/assets/vodei administrador.png"
               class="figure-img mt-5"
               width="260px"
               alt="vodei_logo"

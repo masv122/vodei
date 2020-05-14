@@ -235,10 +235,11 @@
 <script>
 import ContenidoModalPelicula from "@/components/ContenidoModalPelicula.vue";
 import notificacion from "@/mixin/notificacion";
+import getCount from "@/mixin/getCount";
 import { mapMutations, mapGetters, mapActions } from "vuex";
 export default {
   name: "AgregarPelicula",
-  mixins: [notificacion],
+  mixins: [notificacion, getCount],
   data() {
     return {
       idiomasSel: null,
@@ -290,7 +291,7 @@ export default {
       fecha: "",
       sinopsis: "",
       tipo: this.$route.params.tipo,
-      id: 0
+      id: "",
     };
   },
   computed: {
@@ -301,7 +302,7 @@ export default {
     ...mapMutations(["addBreadcrumb"]),
     retornaPelicula() {
       return {
-        id: "mov-" + this.peliculas.length,
+        id: "mov-" + this.id,
         titulo: this.titulo,
         idioma: this.idiomasSel,
         subtitulo: this.subtitulosSel,
@@ -318,12 +319,16 @@ export default {
         tipo: this.tipo
       };
     },
-    _agregarPelicula() {
+     _agregarPelicula() {
       const resultado = this.agregarPelicula(this.retornaPelicula());
-      resultado.then(res => {
-        this.show(res, 'Pelicula');
+      resultado.then( (res) => {
+        this.show(res, "Pelicula");
+        this.id ++;
       });
     }
+  },
+  async beforeMount () {
+    this.id = await this.count();
   },
   created() {
     this.addBreadcrumb([

@@ -82,7 +82,7 @@
                   </b-button>
                 </b-input-group-addon>
               </b-input-group>
-              <ListaContenido :contenidos="series" />
+              <ListaContenido :contenidos="catalogo" />
             </b-form-group>
             <div v-else>
               <b-button variant="danger" block @click="reiniciarSerie()">
@@ -170,7 +170,8 @@ export default {
       "series",
       "contenido",
       "temporadas",
-      "temporada"
+      "temporada",
+      "catalogo"
     ])
   },
   methods: {
@@ -206,6 +207,7 @@ export default {
     }
   },
   created() {
+    this.cargarSeries();
     this.addBreadcrumb([
       {
         text: "Home",
