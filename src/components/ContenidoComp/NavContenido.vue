@@ -6,9 +6,12 @@
           class="mt-4"
           :active="botones[0] ? true : false"
           @click="
-            cargarPeliculas(0);
+            cargarPeliculas(0).then(() => {
+              updateFiltros(catalogo);
+            });
             setActivo(0);
             modifyTContenido(0);
+            resetFiltros();
           "
         >
           Estrenos</b-nav-item
@@ -17,9 +20,12 @@
           class="mt-4"
           :active="botones[1] ? true : false"
           @click="
-            cargarSeries();
+            cargarSeries().then(() => {
+              updateFiltros(catalogo);
+            });
             setActivo(1);
             modifyTContenido(1);
+            resetFiltros();
           "
         >
           Series</b-nav-item
@@ -28,7 +34,10 @@
           class="mt-4"
           :active="botones[2] ? true : false"
           @click="
-            cargarPeliculas(1);
+            cargarPeliculas(1).then(() => {
+              updateFiltros(catalogo);
+            });
+            resetFiltros();
             setActivo(2);
           "
         >
@@ -85,15 +94,13 @@
           </b-input-group>
         </b-nav-form>
       </b-nav>
-      <div></div>
       <div class="nav_bar_contenido_y_filtro" v-show="filtros">
         <div class="form-inline my-2 justify-content-center">
-          <hr />
           <b-input-group class="m-1" size="sm" prepend="Idioma">
             <div>
               <b-form-select
-                v-model="selected"
-                :options="options"
+                v-model="idiomaSel"
+                :options="idioma"
                 size="sm"
               ></b-form-select>
             </div>
@@ -101,17 +108,17 @@
           <b-input-group class="m-1" size="sm" prepend="Genero">
             <div>
               <b-form-select
-                v-model="selected"
-                :options="options"
+                v-model="generoSel"
+                :options="genero"
                 size="sm"
               ></b-form-select>
             </div>
           </b-input-group>
-          <b-input-group class="m-1" size="sm" prepend="Subtitulo">
+          <b-input-group v-if="!botones[1]" class="m-1" size="sm" prepend="Director">
             <div>
               <b-form-select
-                v-model="selected"
-                :options="options"
+                v-model="directorSel"
+                :options="director"
                 size="sm"
               ></b-form-select>
             </div>
@@ -119,8 +126,8 @@
           <b-input-group class="m-1" size="sm" prepend="Pais">
             <div>
               <b-form-select
-                v-model="selected"
-                :options="options"
+                v-model="paisSel"
+                :options="pais"
                 size="sm"
               ></b-form-select>
             </div>
@@ -128,8 +135,8 @@
           <b-input-group class="m-1" size="sm" prepend="Productora">
             <div>
               <b-form-select
-                v-model="selected"
-                :options="options"
+                v-model="productoraSel"
+                :options="productora"
                 size="sm"
               ></b-form-select>
             </div>
@@ -137,23 +144,15 @@
           <b-input-group class="m-1" size="sm" prepend="Año">
             <div>
               <b-form-select
-                v-model="selected"
-                :options="options"
+                v-model="añoSel"
+                :options="año"
                 size="sm"
               ></b-form-select>
             </div>
           </b-input-group>
-          <b-input-group class="m-1" size="sm" prepend="Valoracion">
-            <div>
-              <b-form-select
-                v-model="selected"
-                :options="options"
-                size="sm"
-              ></b-form-select>
-            </div>
-          </b-input-group>
-        </div></div
-    ></b-container>
+        </div>
+      </div>
+    </b-container>
   </div>
 </template>
 
@@ -164,15 +163,13 @@ export default {
   name: "NavContenido",
   data() {
     return {
-      selected: null,
-      options: [
-        { value: null, text: "Please select an option" },
-        { value: "a", text: "This is First option" },
-        { value: "b", text: "Selected Option" },
-        { value: { C: "3PO" }, text: "This is an option with object value" },
-        { value: "d", text: "This one is disabled", disabled: true }
-      ],
       filtros: false,
+      idiomaSel: "",
+      generoSel: "",
+      directorSel: "",
+      paisSel: "",
+      productoraSel: "",
+      añoSel: "",
       botones: {
         0: true,
         1: false,
@@ -182,11 +179,20 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("Catalogo", ["series", "peliculas"])
+    ...mapGetters("Catalogo", ["series", "peliculas", "catalogo"]),
+    ...mapGetters("filtros", [
+      "idioma",
+      "genero",
+      "director",
+      "pais",
+      "productora",
+      "año"
+    ])
   },
   methods: {
     ...mapMutations(["addBreadcrumb"]),
     ...mapMutations("Catalogo", ["modifyTContenido", "filtrarContenido"]),
+    ...mapMutations("filtros", ["updateFiltros"]),
     ...mapActions("Catalogo", ["cargarPeliculas", "cargarSeries"]),
     setActivo(boton) {
       for (var item in this.botones) {
@@ -198,23 +204,33 @@ export default {
       }
     },
     filtrar() {
-
       if (this.botones[0]) {
-        this.filtrarContenido({
-          contenido: this.peliculas,
-          texto: this.findText
-        });
+        this.filtrarContenido(this.getParams(this.peliculas));
       } else if (this.botones[1]) {
-        this.filtrarContenido({
-          contenido: this.series,
-          texto: this.findText
-        });
+        this.filtrarContenido(this.getParams(this.series));
       } else {
-        this.filtrarContenido({
-          contenido: this.peliculas,
-          texto: this.findText
-        });
+        this.filtrarContenido(this.getParams(this.peliculas));
       }
+    },
+    resetFiltros() {
+      this.idiomaSel = "";
+      this.generoSel = "";
+      this.directorSel = "";
+      this.paisSel = "";
+      this.productoraSel = "";
+      this.añoSel = "";
+    },
+    getParams(contenido) {
+      return {
+        contenido: contenido,
+        texto: this.findText,
+        idioma: this.idiomaSel,
+        genero: this.generoSel,
+        director: this.directorSel,
+        pais: this.paisSel,
+        productora: this.productoraSel,
+        año: this.añoSel
+      };
     }
   }
 };

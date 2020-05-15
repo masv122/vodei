@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import Catalogo from "@/modules/Catalogo";
+import filtros from "@/modules/filtros";
 
 Vue.use(Vuex);
 
@@ -70,5 +71,6 @@ export default new Vuex.Store({
   },
   modules: {
     Catalogo,
+    filtros
   },
 });

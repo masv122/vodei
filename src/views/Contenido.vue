@@ -14,7 +14,7 @@ import Catalogo from "@/components/ContenidoComp/Catalogo.vue";
 import NavContenido from "@/components/ContenidoComp/NavContenido.vue";
 import Paginacion from "@/components/Paginacion.vue";
 import Jumbotron from "@/components/Jumbotron.vue";
-import { mapMutations, mapActions } from "vuex";
+import { mapMutations, mapActions, mapGetters } from "vuex";
 export default {
   name: "Contenido",
   data() {
@@ -22,6 +22,9 @@ export default {
       pieTitulo:
         "En este apartado podras navegar por todo el catalogo que ofrece Vodei asi como agregar nuevo contenido o modifcarlo"
     };
+  },
+  computed: {
+    ...mapGetters("Catalogo", ["peliculas"])
   },
   components: {
     Catalogo,
@@ -31,11 +34,14 @@ export default {
   },
   methods: {
     ...mapMutations(["addBreadcrumb"]),
+    ...mapMutations("filtros", ["updateFiltros"]),
     ...mapActions("Catalogo", ["cargarPeliculas", "cargarSeries"])
   },
   mounted() {
     this.cargarSeries();
-    this.cargarPeliculas(0);
+    this.cargarPeliculas(0).then(() => {
+      this.updateFiltros(this.peliculas);
+    });
   },
   created() {
     this.addBreadcrumb([

@@ -6,10 +6,12 @@ export default {
     catalogo: [],
     peliculas: [],
     series: [],
+    tipo: "pelicula",
     temporadas: [],
     capitulos: [],
     contenido: null,
     serie: null,
+    pelicula: null,
     temporada: null,
     capitulo: null,
     tcontenido: 0,
@@ -18,10 +20,12 @@ export default {
     cargarPeliculas(state, peliculas) {
       state.peliculas = peliculas;
       state.catalogo = state.peliculas;
+      state.tipo = "pelicula";
     },
     cargarSeries(state, series) {
       state.series = series;
       state.catalogo = state.series;
+      state.tipo = "serie";
     },
     agregarPelicula(state, pelicula) {
       state.peliculas.push(pelicula);
@@ -36,8 +40,17 @@ export default {
       state.capitulos.push(capitulo);
     },
     filtrarContenido(state, params) {
-      state.catalogo = params.contenido.filter((item) =>
-        item.Titulo.toLowerCase().includes(params.texto.toLowerCase())
+      state.catalogo = params.contenido.filter(
+        (item) =>
+          item.Titulo.toLowerCase().includes(params.texto.toLowerCase()) &&
+          item.Idioma.toLowerCase().includes(params.idioma.toLowerCase()) &&
+          item.Genero.toLowerCase().includes(params.genero.toLowerCase()) &&
+          item.Director.toLowerCase().includes(params.director.toLowerCase()) &&
+          item.Pais.toLowerCase().includes(params.pais.toLowerCase()) &&
+          item.Productora.toLowerCase().includes(
+            params.productora.toLowerCase()
+          ) &&
+          item.Fecha_estreno.toLowerCase().includes(params.año.toLowerCase())
       );
     },
     updateContenido(state, contenido) {
@@ -51,6 +64,9 @@ export default {
     },
     modifySerie(state, serie) {
       state.serie = serie;
+    },
+    modifyPelicula(state, pelicula) {
+      state.pelicula = pelicula;
     },
     modifyTContenido(state, tContenido) {
       state.tContenido = tContenido;
@@ -307,6 +323,26 @@ export default {
       commit("modifySerie", serie);
       return serie;
     },
+    updatePelicula: async function({ commit }, id) {
+      commit("setCargando", null, { root: true });
+      const pelicula = Vue.axios
+        .get(`/pelicula/${id}`)
+        .then((res) => {
+          if (res.data.error) {
+            commit("setCargando", null, { root: true });
+            return null;
+          } else {
+            commit("setCargando", null, { root: true });
+            return res.data.pelicula;
+          }
+        })
+        .catch((e) => {
+          commit("updateConErr", true, { root: true });
+          return e;
+        });
+      commit("modifyPelicula", pelicula);
+      return pelicula;
+    },
     updateTemporada: async function({ commit }, id) {
       commit("setCargando", null, { root: true });
       const temporada = Vue.axios
@@ -329,35 +365,16 @@ export default {
     },
   },
   getters: {
-    catalogo: (state) => {
-      return state.catalogo;
-    },
-    series: (state) => {
-      return state.series;
-    },
-    peliculas: (state) => {
-      return state.peliculas;
-    },
-    contenido: (state) => {
-      return state.contenido;
-    },
-    contenidoFiltrado: (state) => {
-      return state.contenidoFiltrado;
-    },
-    temporadas: (state) => {
-      return state.temporadas;
-    },
-    capitulos: (state) => {
-      return state.capitulos;
-    },
-    serie: (state) => {
-      return state.serie;
-    },
-    tContenido: (state) => {
-      return state.tContenido;
-    },
-    temporada: (state) => {
-      return state.temporada;
-    },
+    catalogo: (state) => state.catalogo,
+    series: (state) => state.series,
+    peliculas: (state) => state.peliculas,
+    contenido: (state) => state.contenido,
+    contenidoFiltrado: (state) => state.contenidoFiltrado,
+    temporadas: (state) => state.temporadas,
+    capitulos: (state) => state.capitulos,
+    serie: (state) => state.serie,
+    pelicula: (state) => state.pelicula,
+    tContenido: (state) => state.tContenido,
+    temporada: (state) => state.temporada,
   },
 };

@@ -42,12 +42,12 @@ const routes = [
     component: () => import("../views/AgregarTemporada.vue"),
   },
   {
-    path: '/contenido/agregar-capitulo',
-    name: 'Agregar Capitulo',
-    component: () => import('../views/AgregarCapitulo.vue'),
+    path: "/contenido/agregar-capitulo",
+    name: "Agregar Capitulo",
+    component: () => import("../views/AgregarCapitulo.vue"),
   },
   {
-    path: "/contenido/detalles-contenido",
+    path: "/contenido/detalles-contenido/:tipo/:id",
     name: "Detalles Contenido",
     component: () => import("../views/DetallesContenido.vue"),
   },

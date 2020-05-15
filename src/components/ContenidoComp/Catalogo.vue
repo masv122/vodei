@@ -12,6 +12,7 @@
             :titulo="contenido.Titulo"
             :tContenido="tContenido"
             :portada="contenido.portada"
+            
           />
         </b-col>
       </b-row>

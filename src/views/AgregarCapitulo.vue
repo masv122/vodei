@@ -276,15 +276,15 @@
               spinner-variant="primary"
               class="d-inline-blocks"
             >
-            <b-button
-              block
-              variant="primary"
-              type="submit"
-              :disabled="contenido == null || temporada == null"
-              v-b-modal.ModalPelicula
-            >
-              Agregar
-            </b-button>
+              <b-button
+                block
+                variant="primary"
+                type="submit"
+                :disabled="contenido == null || temporada == null"
+                v-b-modal.ModalPelicula
+              >
+                Agregar
+              </b-button>
             </b-overlay>
             <b-button block type="reset" variant="danger">
               Cancelar
@@ -306,6 +306,12 @@ import notificacion from "@/mixin/notificacion";
 export default {
   name: "AgregarCapitulo",
   mixins: [notificacion],
+  components: {
+    ListaContenido,
+    ContenidoIndividual,
+    ListaTemporadas,
+    ListaCapitulos
+  },
   data() {
     return {
       textSerie: "",
@@ -358,7 +364,7 @@ export default {
       "updateTemporada",
       "updateCapitulos"
     ]),
-    ...mapMutations(["addBreadcrumb"]),
+    ...mapMutations(["addBreadcrumb", "setLoadingViews"]),
     getCapitulo() {
       return {
         id:
@@ -398,13 +404,11 @@ export default {
       this.updateCapitulos(null);
     }
   },
-  components: {
-    ListaContenido,
-    ContenidoIndividual,
-    ListaTemporadas,
-    ListaCapitulos
-  },
+  beforeCreate() {},
   created() {
+    this.setLoadingViews();
+  },
+  mounted() {
     this.cargarSeries();
     this.addBreadcrumb([
       {
