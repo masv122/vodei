@@ -11,7 +11,7 @@
             _agregarPelicula();
           "
         >
-          Agregar
+          Confirmar
         </b-button>
         <b-button size="sm" variant="danger" @click="cancel()">
           Cancelar
@@ -227,6 +227,7 @@
               block
               variant="primary"
               type="submit"
+              :disabled="isDisabled"
               v-b-modal.ModalPelicula
             >
               Agregar
@@ -305,8 +306,10 @@ export default {
   },
   computed: {
     ...mapGetters("Catalogo", ["peliculas"]),
-    ...mapGetters(["cargando"])
-
+    ...mapGetters(["cargando"]),
+    isDisabled(){
+      return this.portada === null || this.sinopsis === "";
+    }
   },
   methods: {
     ...mapActions("Catalogo", ["agregarPelicula"]),

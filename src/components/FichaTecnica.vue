@@ -5,7 +5,7 @@
       title-Tag="title"
       header-tag="header"
       footer-tag="footer"
-      img-src="@/assets/portadas/poster-joker-2-1567010576 (1).jpg"
+      :img-src="`http://localhost:3000/uploads/portadas/${portada}`"
     >
       <template v-slot:header>
         <h2>
@@ -18,7 +18,8 @@
       <b-card-body>
         <b-card-text>
           <div>
-            <b-table stacked :items="items"></b-table>
+
+            <b-table stacked :items="items()"></b-table>
           </div>
         </b-card-text>
       </b-card-body>
@@ -90,25 +91,29 @@ export default {
     duracion: {
       type: String,
       default: ""
+    },
+    portada: {
+      type: String,
+      default: ""
     }
   },
-  data() {
-    return {
-      items: [
-        {
-          Idioma: this.idioma,
-          Genero: this.genero,
-          Subtitulos: this.subtitulos,
-          Pais: this.pais,
-          Productora: this.productora,
-          Estreno: this.estreno,
-          Actores: this.actores,
-          Director: this.director,
-          Duracion: this.duracion
-        }
-      ]
-    };
-  }
+  methods: {
+    items() {
+      return [
+      {
+        Idioma: this.idioma,
+        Genero: this.genero,
+        Subtitulos: this.subtitulos,
+        Pais: this.pais,
+        Productora: this.productora,
+        Estreno: this.estreno,
+        Actores: this.actores,
+        Director: this.director,
+        Duracion: this.duracion
+      }
+    ]
+    }
+  },
 };
 </script>
 

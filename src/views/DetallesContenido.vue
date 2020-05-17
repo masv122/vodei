@@ -20,7 +20,7 @@
         <div class="col-md-4">
           <FichaTecnica
             :titulo="titulo"
-            :titulo_original="tituloOriginal"
+            :tituloOriginal="tituloOriginal"
             :idioma="idioma"
             :genero="genero"
             :subtitulos="subtitulo"
@@ -30,6 +30,7 @@
             :actores="actores"
             :director="director"
             :duracion="duracion"
+            :portada="portada"
           />
         </div>
       </div>
@@ -42,7 +43,7 @@ import FichaTecnica from "@/components/FichaTecnica.vue";
 import NavComentarios from "@/components/NavComentarios.vue";
 import Comentarios from "@/components/Comentarios.vue";
 import Paginacion from "@/components/Paginacion.vue";
-import { mapMutations, mapActions, mapGetters } from "vuex";
+import { mapMutations, mapGetters } from "vuex";
 
 export default {
   name: "DetallesContenido",
@@ -54,45 +55,47 @@ export default {
   },
   data() {
     return {
-      idioma:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Idioma : this.serie.Idioma,
-      subtitulo:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Subtitulo : this.serie.Subtitulo,
-      genero:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Genero : this.serie.Genero ,
-      pais: this.$route.params.tipo === "pelicula" ? this.pelicula.Pais : this.serie.Pais,
-      portada:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.portada : this.serie.portada,
-      titulo:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Titulo : this.serie.Titulo,
-      productora:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Productora : this.serie.Productora,
-      actores:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Actores : this.serie.Actores,
-      tituloOriginal:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Titulo_original : this.serie.Titulo_original,
-      director:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Director : this.serie.Director,
-      duracion:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Duracion : "",
-      fecha:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.Fecha_estreno : this.serie.Fecha_estreno,
-      sinopsis:
-        this.$route.params.tipo === "pelicula" ? this.pelicula.sinopsis : this.serie.sinopsis,
-      id: this.$route.params.tipo === "pelicula" ? this.pelicula.id : this.serie.id
+      idioma: "",
+      subtitulo: "",
+      genero: "",
+      pais: "",
+      portada: "",
+      titulo: "",
+      productora: "",
+      actores: "",
+      tituloOriginal: "",
+      director: "",
+      duracion: "",
+      fecha: "",
+      sinopsis: "",
+      id: ""
     };
   },
   computed: {
-    ...mapGetters("Catalogo", ["pelicua", "serie"])
+    ...mapGetters("Catalogo", ["contenido"])
   },
   methods: {
-    ...mapMutations(["addBreadcrumb"]),
-    ...mapActions("Catalogo", ["updatePelicula", "updateSerie"])
+    ...mapMutations(["addBreadcrumb"])
+  },
+  mounted() {
+    this.idioma = this.contenido.Idioma;
+    this.subtitulo = this.contenido.Subtitulo;
+    this.genero = this.contenido.Genero;
+    this.pais = this.contenido.Pais;
+    this.portada = this.contenido.portada;
+    this.titulo = this.contenido.Titulo;
+    this.productora = this.contenido.Productora;
+    this.actores = this.contenido.Actores;
+    this.tituloOriginal = this.contenido.Titulo_Original;
+    this.director = this.contenido.Director;
+    this.duracion = this.$route.params.id.includes("mov")
+      ? this.contenido.Duracion
+      : "";
+    this.fecha = this.contenido.Fecha_estreno;
+    this.sinopsis = this.contenido.sinopsis;
+    this.id = this.contenido.id;
   },
   created() {
-    if (this.$route.params.tipo === "pelicula")
-      this.updatePelicula(this.$route.params.id);
-    else this.updateSerie(this.$route.params.id);
     this.addBreadcrumb([
       {
         text: "Home",

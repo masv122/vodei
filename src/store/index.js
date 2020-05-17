@@ -14,6 +14,7 @@ export default new Vuex.Store({
     servidor: false,
     conErr: false,
     cargando: false,
+    cargandoCatalogo: false,
     loadingViews: false,
   },
   mutations: {
@@ -41,6 +42,9 @@ export default new Vuex.Store({
     setCargando(state) {
       state.cargando = !state.cargando;
     },
+    setCargandoCatalogo(state) {
+      state.cargandoCatalogo = !state.cargandoCatalogo;
+    },
     setLoadingViews(state) {
       state.loadingViews = !state.loadingViews;
     },
@@ -67,6 +71,7 @@ export default new Vuex.Store({
     servidor: (state) => state.servidor,
     conErr: (state) => state.conErr,
     cargando: (state) => state.cargando,
+    cargandoCatalogo: (state) => state.cargandoCatalogo,
     loadingViews: (state) => state.loadingViews,
   },
   modules: {

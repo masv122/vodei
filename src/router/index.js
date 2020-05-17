@@ -47,7 +47,7 @@ const routes = [
     component: () => import("../views/AgregarCapitulo.vue"),
   },
   {
-    path: "/contenido/detalles-contenido/:tipo/:id",
+    path: "/contenido/detalles-contenido/:id",
     name: "Detalles Contenido",
     component: () => import("../views/DetallesContenido.vue"),
   },

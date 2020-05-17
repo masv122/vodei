@@ -1,18 +1,18 @@
 <template>
   <div>
     <b-container fluid class="p-2">
-      <LoadingCatalogo v-if="cargando"/>
+      <LoadingCatalogo v-if="cargandoCatalogo"/>
       <b-row v-else>
         <b-col
           v-for="(contenido, index) in catalogo"
-          v-bind:key="index"
+          :key="index"
           cols="3"
         >
           <ContenidoIndividual
             :titulo="contenido.Titulo"
             :tContenido="tContenido"
             :portada="contenido.portada"
-            
+            :id="contenido.id"
           />
         </b-col>
       </b-row>
@@ -29,7 +29,7 @@ export default {
   name: "Catalogo",
   computed: {
     ...mapGetters("Catalogo", ["catalogo", "tContenido"]),
-    ...mapGetters(["cargando"])
+    ...mapGetters(["cargandoCatalogo"])
 
   },
   components: {

@@ -35,6 +35,7 @@ export default {
   methods: {
     ...mapMutations(["addBreadcrumb"]),
     ...mapMutations("filtros", ["updateFiltros"]),
+    ...mapMutations("Catalogo", ["updateCatalogo"]),
     ...mapActions("Catalogo", ["cargarPeliculas", "cargarSeries"])
   },
   mounted() {
@@ -54,7 +55,10 @@ export default {
         to: { name: "Contenido" }
       }
     ]);
-  }
+  },
+  destroyed () {
+    this.updateCatalogo(null);
+  },
 };
 </script>
 

@@ -15,7 +15,7 @@
             src="@/assets/vodei server logo.png"
             class="serverLogo text-center mt-4"
             fluid
-            alt="Responsive image"
+            alt="server_logo"
           ></b-img>
           <div class="mt-4">
             <b-spinner

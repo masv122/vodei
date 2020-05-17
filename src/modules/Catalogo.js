@@ -27,6 +27,9 @@ export default {
       state.catalogo = state.series;
       state.tipo = "serie";
     },
+    updateCatalogo(state, catalogo) {
+      state.catalogo = catalogo;
+    },
     agregarPelicula(state, pelicula) {
       state.peliculas.push(pelicula);
     },
@@ -207,15 +210,15 @@ export default {
       return resultado;
     },
     cargarPeliculas: async function({ commit }, tipo) {
-      commit("setCargando", null, { root: true });
+      commit("setCargandoCatalogo", null, { root: true });
       const peliculas = await Vue.axios
         .get(`/peliculas/${tipo}`)
         .then((res) => {
           if (res.data.error) {
-            commit("setCargando", null, { root: true });
+            commit("setCargandoCatalogo", null, { root: true });
             return res.data.error_object;
           } else {
-            commit("setCargando", null, { root: true });
+            commit("setCargandoCatalogo", null, { root: true });
             return res.data.peliculas;
           }
         })
@@ -226,15 +229,15 @@ export default {
       commit("cargarPeliculas", peliculas);
     },
     cargarSeries: async function({ commit }) {
-      commit("setCargando", null, { root: true });
+      commit("setCargandoCatalogo", null, { root: true });
       const series = await Vue.axios
         .get("/serie")
         .then((res) => {
           if (res.data.error) {
-            commit("setCargando", null, { root: true });
+            commit("setCargandoCatalogo", null, { root: true });
             return res.data.error_object;
           } else {
-            commit("setCargando", null, { root: true });
+            commit("setCargandoCatalogo", null, { root: true });
             return res.data.series;
           }
         })
@@ -305,7 +308,7 @@ export default {
     },
     updateSerie: async function({ commit }, id) {
       commit("setCargando", null, { root: true });
-      const serie = Vue.axios
+      const serie = await Vue.axios
         .get(`/serie/${id}`)
         .then((res) => {
           if (res.data.error) {
@@ -325,7 +328,7 @@ export default {
     },
     updatePelicula: async function({ commit }, id) {
       commit("setCargando", null, { root: true });
-      const pelicula = Vue.axios
+      const pelicula = await Vue.axios
         .get(`/pelicula/${id}`)
         .then((res) => {
           if (res.data.error) {
@@ -345,7 +348,7 @@ export default {
     },
     updateTemporada: async function({ commit }, id) {
       commit("setCargando", null, { root: true });
-      const temporada = Vue.axios
+      const temporada = await Vue.axios
         .get(`/temporada/${id}`)
         .then((res) => {
           if (res.data.error) {

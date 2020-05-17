@@ -201,6 +201,7 @@
               block
               variant="primary"
               type="submit"
+              :disabled="isDisabled"
               v-b-modal.ModalSerie
             >
               Agregar
@@ -275,7 +276,10 @@ export default {
   },
   computed: {
     ...mapGetters("Catalogo", ["series"]),
-    ...mapGetters(["cargando"])
+    ...mapGetters(["cargando"]),
+    isDisabled() {
+      return this.portada === null || this.sinopsis === "";
+    }
   },
   methods: {
     ...mapMutations(["addBreadcrumb"]),
