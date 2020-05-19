@@ -8,7 +8,7 @@ export default {
         mensaje = `No se pudo agregar la ${tipo}`;
         variant = "danger";
         icono = "fa-times";
-        alert(res.error_object);
+        console.log(res.error_object);
       } else {
         mensaje = `${tipo} agregada satisfactoriamente`;
         variant = "success";

@@ -1,7 +1,10 @@
 <template>
   <div>
-    <b-container fluid class="p-2">
-      <LoadingCatalogo v-if="cargandoCatalogo"/>
+    <b-container
+      fluid
+      class="p-2"
+    >
+      <LoadingCatalogo v-if="cargandoCatalogo" />
       <b-row v-else>
         <b-col
           v-for="(contenido, index) in catalogo"
@@ -22,7 +25,7 @@
 
 <script>
 import ContenidoIndividual from "@/components/ContenidoIndividual.vue";
-import  LoadingCatalogo  from "@/components/loading/LoadingCatalogo.vue";
+import LoadingCatalogo from "@/components/loading/LoadingCatalogo.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -30,7 +33,6 @@ export default {
   computed: {
     ...mapGetters("Catalogo", ["catalogo", "tContenido"]),
     ...mapGetters(["cargandoCatalogo"])
-
   },
   components: {
     ContenidoIndividual,
@@ -40,5 +42,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

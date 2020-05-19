@@ -1,7 +1,13 @@
 <template>
   <div>
-    <b-container class="shadow rounded" fluid>
-      <b-nav class="my-2" pills>
+    <b-container
+      class="shadow rounded"
+      fluid
+    >
+      <b-nav
+        class="my-2"
+        pills
+      >
         <b-nav-item
           class="mt-4"
           :active="botones[0] ? true : false"
@@ -14,8 +20,7 @@
             resetFiltros();
           "
         >
-          Estrenos</b-nav-item
-        >
+          Estrenos</b-nav-item>
         <b-nav-item
           class="mt-4"
           :active="botones[1] ? true : false"
@@ -28,8 +33,7 @@
             resetFiltros();
           "
         >
-          Series</b-nav-item
-        >
+          Series</b-nav-item>
         <b-nav-item
           class="mt-4"
           :active="botones[2] ? true : false"
@@ -41,48 +45,41 @@
             setActivo(2);
           "
         >
-          Contemporaneas</b-nav-item
-        >
+          Contemporaneas</b-nav-item>
         <div class="border rounded p-1">
-          <b-dropdown-header
-            >Selecciona el tipo de contenido a agregar</b-dropdown-header
-          >
+          <b-dropdown-header>Selecciona el tipo de contenido a agregar</b-dropdown-header>
           <b-dropdown text="Agregar Peliculas">
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item
-              :to="{ name: 'Agregar Pelicula', params: { tipo: 0 } }"
-              >Estreno</b-dropdown-item
-            >
-            <b-dropdown-item
-              :to="{ name: 'Agregar Pelicula', params: { tipo: 1 } }"
-              >Contempornea</b-dropdown-item
-            >
+            <b-dropdown-item :to="{ name: 'Agregar Pelicula', params: { tipo: 0 } }">Estreno</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'Agregar Pelicula', params: { tipo: 1 } }">Contempornea</b-dropdown-item>
           </b-dropdown>
           <b-dropdown text="Agregar Series">
             <b-dropdown-divider></b-dropdown-divider>
-            <b-dropdown-item :to="{ name: 'Agregar Serie' }"
-              >Serie</b-dropdown-item
-            >
-            <b-dropdown-item :to="{ name: 'Agregar Temporada' }"
-              >Temporada</b-dropdown-item
-            >
-            <b-dropdown-item :to="{ name: 'Agregar Capitulo' }"
-              >Capitulo</b-dropdown-item
-            >
+            <b-dropdown-item :to="{ name: 'Agregar Serie' }">Serie</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'Agregar Temporada' }">Temporada</b-dropdown-item>
+            <b-dropdown-item :to="{ name: 'Agregar Capitulo' }">Capitulo</b-dropdown-item>
           </b-dropdown>
         </div>
         <b-nav-form class="ml-auto">
           <b-input-group>
             <template v-slot:append>
               <b-button-group>
-                <b-button variant="outline-info" @click="filtrar()"
-                  ><i class="fa fa-search" aria-hidden="true"></i>
-                  Buscar</b-button
-                >
-                <b-button v-on:click="filtros = !filtros" variant="warning"
-                  ><i class="fa fa-filter" aria-hidden="true"></i>
-                  Filtrar</b-button
-                >
+                <b-button
+                  variant="outline-info"
+                  @click="filtrar()"
+                ><i
+                    class="fa fa-search"
+                    aria-hidden="true"
+                  ></i>
+                  Buscar</b-button>
+                <b-button
+                  v-on:click="filtros = !filtros"
+                  variant="warning"
+                ><i
+                    class="fa fa-filter"
+                    aria-hidden="true"
+                  ></i>
+                  Filtrar</b-button>
               </b-button-group>
             </template>
             <b-form-input
@@ -94,9 +91,16 @@
           </b-input-group>
         </b-nav-form>
       </b-nav>
-      <div class="nav_bar_contenido_y_filtro" v-show="filtros">
+      <div
+        class="nav_bar_contenido_y_filtro"
+        v-show="filtros"
+      >
         <div class="form-inline my-2 justify-content-center">
-          <b-input-group class="m-1" size="sm" prepend="Idioma">
+          <b-input-group
+            class="m-1"
+            size="sm"
+            prepend="Idioma"
+          >
             <div>
               <b-form-select
                 v-model="idiomaSel"
@@ -105,7 +109,11 @@
               ></b-form-select>
             </div>
           </b-input-group>
-          <b-input-group class="m-1" size="sm" prepend="Genero">
+          <b-input-group
+            class="m-1"
+            size="sm"
+            prepend="Genero"
+          >
             <div>
               <b-form-select
                 v-model="generoSel"
@@ -114,7 +122,12 @@
               ></b-form-select>
             </div>
           </b-input-group>
-          <b-input-group v-if="!botones[1]" class="m-1" size="sm" prepend="Director">
+          <b-input-group
+            v-if="!botones[1]"
+            class="m-1"
+            size="sm"
+            prepend="Director"
+          >
             <div>
               <b-form-select
                 v-model="directorSel"
@@ -123,7 +136,11 @@
               ></b-form-select>
             </div>
           </b-input-group>
-          <b-input-group class="m-1" size="sm" prepend="Pais">
+          <b-input-group
+            class="m-1"
+            size="sm"
+            prepend="Pais"
+          >
             <div>
               <b-form-select
                 v-model="paisSel"
@@ -132,7 +149,11 @@
               ></b-form-select>
             </div>
           </b-input-group>
-          <b-input-group class="m-1" size="sm" prepend="Productora">
+          <b-input-group
+            class="m-1"
+            size="sm"
+            prepend="Productora"
+          >
             <div>
               <b-form-select
                 v-model="productoraSel"
@@ -141,7 +162,11 @@
               ></b-form-select>
             </div>
           </b-input-group>
-          <b-input-group class="m-1" size="sm" prepend="Año">
+          <b-input-group
+            class="m-1"
+            size="sm"
+            prepend="Año"
+          >
             <div>
               <b-form-select
                 v-model="añoSel"

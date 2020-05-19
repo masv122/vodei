@@ -18,7 +18,10 @@
           </p>
         </b-col>
         <b-col cols="4">
-          <b-nav pills class="flex-column justify-content-center text-center">
+          <b-nav
+            pills
+            class="flex-column justify-content-center text-center"
+          >
             <b-nav-item>
               <b-button
                 block
@@ -26,7 +29,10 @@
                 :to="{ name: 'Agregar Pelicula' }"
               >
                 Agregar Estreno
-                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                <i
+                  class="fa fa-arrow-right"
+                  aria-hidden="true"
+                ></i>
               </b-button>
             </b-nav-item>
             <b-nav-item>
@@ -36,13 +42,23 @@
                 :to="{ name: 'Agregar Pelicula' }"
               >
                 Agregar Serie
-                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                <i
+                  class="fa fa-arrow-right"
+                  aria-hidden="true"
+                ></i>
               </b-button>
             </b-nav-item>
             <b-nav-item>
-              <b-button block variant="success" :to="{ name: 'Agregar Serie' }">
+              <b-button
+                block
+                variant="success"
+                :to="{ name: 'Agregar Serie' }"
+              >
                 Agregar Contemporanea
-                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                <i
+                  class="fa fa-arrow-right"
+                  aria-hidden="true"
+                ></i>
               </b-button>
             </b-nav-item>
           </b-nav>
@@ -56,7 +72,10 @@
     >
       <b-row>
         <b-col cols="4">
-          <b-nav pills class="flex-column justify-content-center text-center">
+          <b-nav
+            pills
+            class="flex-column justify-content-center text-center"
+          >
             <b-nav-item>
               <b-button
                 block
@@ -64,7 +83,10 @@
                 @click="setTabSalasFunciones(true)"
                 :to="{ name: 'Salas y Funciones' }"
               >
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                <i
+                  class="fa fa-arrow-left"
+                  aria-hidden="true"
+                ></i>
                 Salas
               </b-button>
             </b-nav-item>
@@ -75,7 +97,10 @@
                 @click="setTabSalasFunciones(false)"
                 :to="{ name: 'Salas y Funciones' }"
               >
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                <i
+                  class="fa fa-arrow-left"
+                  aria-hidden="true"
+                ></i>
                 Funciones
               </b-button>
             </b-nav-item>
@@ -106,23 +131,47 @@
           </p>
         </b-col>
         <b-col cols="4">
-          <b-nav pills class="flex-column justify-content-center text-center">
+          <b-nav
+            pills
+            class="flex-column justify-content-center text-center"
+          >
             <b-nav-item>
-              <b-button block variant="secondary" href="">
+              <b-button
+                block
+                variant="secondary"
+                href=""
+              >
                 Actualizar Estrenos
-                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                <i
+                  class="fa fa-arrow-right"
+                  aria-hidden="true"
+                ></i>
               </b-button>
             </b-nav-item>
             <b-nav-item>
-              <b-button block variant="secondary" href="">
+              <b-button
+                block
+                variant="secondary"
+                href=""
+              >
                 Actualizar Series
-                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                <i
+                  class="fa fa-arrow-right"
+                  aria-hidden="true"
+                ></i>
               </b-button>
             </b-nav-item>
             <b-nav-item>
-              <b-button block variant="secondary" href="">
+              <b-button
+                block
+                variant="secondary"
+                href=""
+              >
                 Actualizar Contemporanea
-                <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                <i
+                  class="fa fa-arrow-right"
+                  aria-hidden="true"
+                ></i>
               </b-button>
             </b-nav-item>
           </b-nav>
@@ -135,11 +184,24 @@
       show
     >
       <b-row>
-        <b-col cols="4" class="pt-3">
-          <b-nav pills class="flex-column justify-content-center text-center">
+        <b-col
+          cols="4"
+          class="pt-3"
+        >
+          <b-nav
+            pills
+            class="flex-column justify-content-center text-center"
+          >
             <b-nav-item>
-              <b-button block variant="warning" :to="{ name: 'Tienda' }">
-                <i class="fa fa-arrow-left" aria-hidden="true"></i>
+              <b-button
+                block
+                variant="warning"
+                :to="{ name: 'Tienda' }"
+              >
+                <i
+                  class="fa fa-arrow-left"
+                  aria-hidden="true"
+                ></i>
                 Modificar la tienda
               </b-button>
             </b-nav-item>

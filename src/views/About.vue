@@ -1,10 +1,12 @@
 <template>
   <div class="about">
-  
     <b-container>
       <form @submit.prevent="">
         <!-- <input type="file" @change="onFileChange" name="" id="" /> -->
-        <img :src="image" alt="" />
+        <img
+          :src="image"
+          alt=""
+        />
         <b-form-group>
           <div class="mt-1">
             Portada Seleccionada: {{ portada ? portada.name : "" }}
@@ -20,7 +22,12 @@
           ></b-form-file>
         </b-form-group>
         <b-form-group align="center">
-          <b-button block variant="primary" type="submit" @click="enviar()">
+          <b-button
+            block
+            variant="primary"
+            type="submit"
+            @click="enviar()"
+          >
             Agregar
           </b-button>
         </b-form-group>

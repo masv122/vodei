@@ -372,6 +372,7 @@ export default {
     series: (state) => state.series,
     peliculas: (state) => state.peliculas,
     contenido: (state) => state.contenido,
+    tipo: (state) => state.tipo,
     contenidoFiltrado: (state) => state.contenidoFiltrado,
     temporadas: (state) => state.temporadas,
     capitulos: (state) => state.capitulos,

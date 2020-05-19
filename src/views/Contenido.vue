@@ -1,9 +1,15 @@
 <template>
   <div>
-    <Jumbotron titulo="Contenido" :pieTitulo="pieTitulo" />
+    <Jumbotron
+      titulo="Contenido"
+      :pieTitulo="pieTitulo"
+    />
     <NavContenido />
     <div>
-      <Catalogo />
+      <b-card class="mb-2 text-center" v-if="catalogo.length == 0">
+        <h6 class="display-4">Aun no hay {{tipo}}s registradas</h6>
+      </b-card>
+      <Catalogo v-else/>
       <Paginacion />
     </div>
   </div>
@@ -24,7 +30,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters("Catalogo", ["peliculas"])
+    ...mapGetters("Catalogo", ["peliculas", "catalogo", "tipo"])
   },
   components: {
     Catalogo,
@@ -56,9 +62,9 @@ export default {
       }
     ]);
   },
-  destroyed () {
+  destroyed() {
     this.updateCatalogo(null);
-  },
+  }
 };
 </script>
 

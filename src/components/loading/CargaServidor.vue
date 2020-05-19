@@ -12,7 +12,7 @@
             Conectando con el servidor...
           </h4>
           <b-img
-            src="@/assets/vodei server logo.png"
+            :src="require('@/assets/vodei server logo.png')"
             class="serverLogo text-center mt-4"
             fluid
             alt="server_logo"
@@ -50,7 +50,7 @@
             Conexion Fallida
           </h4>
           <b-img
-            src="@/assets/vodei server logo.png"
+            :src="require('@/assets/vodei server logo.png')"
             class="serverLogo text-center mt-4"
             fluid
             alt="Responsive image"

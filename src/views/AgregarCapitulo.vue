@@ -1,6 +1,9 @@
 <template>
   <div>
-    <b-modal id="ModalPelicula" title="Confirme">
+    <b-modal
+      id="ModalPelicula"
+      title="Confirme"
+    >
       <h5>¿Agregar Capitulo?</h5>
       <b-form @submit.prevent="">
         <b-form-row>
@@ -108,6 +111,20 @@
             v-model="director"
           >
           </b-form-input>
+          <b-form-group
+            id="input-group-sinopsis"
+            label="Sinopsis:"
+            label-for="sinopsis"
+          >
+            <b-form-textarea
+              id="sinopsis"
+              v-model="sinopsis"
+              placeholder="Ingrese sinopsis..."
+              rows="3"
+              required
+              max-rows="6"
+            ></b-form-textarea>
+          </b-form-group>
         </b-form-group>
       </b-form>
       <template v-slot:modal-footer="{ ok, cancel }">
@@ -121,23 +138,46 @@
         >
           Agregar
         </b-button>
-        <b-button size="sm" variant="danger" @click="cancel()">
+        <b-button
+          size="sm"
+          variant="danger"
+          @click="cancel()"
+        >
           Cancelar
         </b-button>
       </template>
     </b-modal>
     <b-container>
       <h1 class="display-4 my-3">
-        <i class="fa fa-plus" aria-hidden="true"></i> Informacion del capitulo
+        <i
+          class="fa fa-plus"
+          aria-hidden="true"
+        ></i> Informacion del capitulo
       </h1>
-      <form @submit.prevent="" ref="form">
+      <form
+        @submit.prevent=""
+        ref="form"
+      >
         <b-form-row>
-          <b-col cols-sm="12" cols-md="4">
-            <b-alert variant="warning" show v-if="series.length === 0">
-              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+          <b-col
+            cols-sm="12"
+            cols-md="4"
+          >
+            <b-alert
+              variant="warning"
+              show
+              v-if="series.length === 0"
+            >
+              <i
+                class="fa fa-exclamation-triangle"
+                aria-hidden="true"
+              ></i>
               No hay series registradas.
             </b-alert>
-            <b-form-group id="input-group-serie" v-else-if="contenido == null">
+            <b-form-group
+              id="input-group-serie"
+              v-else-if="contenido == null"
+            >
               <div class="border-bottom mb-2">
                 <label>Series</label>
               </div>
@@ -152,16 +192,29 @@
                 >
                 </b-form-input>
                 <b-input-group-addon>
-                  <b-button variant="info" @click="filtrar">
-                    <i class="fa fa-search" aria-hidden="true"></i> Buscar
+                  <b-button
+                    variant="info"
+                    @click="filtrar"
+                  >
+                    <i
+                      class="fa fa-search"
+                      aria-hidden="true"
+                    ></i> Buscar
                   </b-button>
                 </b-input-group-addon>
               </b-input-group>
               <ListaContenido :contenidos="catalogo" />
             </b-form-group>
             <div v-else>
-              <b-button variant="danger" block @click="reiniciarSerie()">
-                <i class="fa fa-times" aria-hidden="true"></i>
+              <b-button
+                variant="danger"
+                block
+                @click="reiniciarSerie()"
+              >
+                <i
+                  class="fa fa-times"
+                  aria-hidden="true"
+                ></i>
               </b-button>
               <ContenidoIndividual
                 :titulo="contenido.Titulo"
@@ -172,16 +225,36 @@
               ></ContenidoIndividual>
             </div>
           </b-col>
-          <b-col cols-sm="12" cols-md="4">
-            <div class="border-bottom mb-2" v-if="temporada == null">
+          <b-col
+            cols-sm="12"
+            cols-md="4"
+          >
+            <div
+              class="border-bottom mb-2"
+              v-if="temporada == null"
+            >
               <label>Temporadas</label>
             </div>
-            <b-alert variant="warning" show v-if="contenido == null">
-              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+            <b-alert
+              variant="warning"
+              show
+              v-if="contenido == null"
+            >
+              <i
+                class="fa fa-exclamation-triangle"
+                aria-hidden="true"
+              ></i>
               Seleccione una serie.
             </b-alert>
-            <b-alert variant="warning" show v-else-if="temporadas.length === 0">
-              <i class="fa fa-exclamation-triangle" aria-hidden="true"></i> La
+            <b-alert
+              variant="warning"
+              show
+              v-else-if="temporadas.length === 0"
+            >
+              <i
+                class="fa fa-exclamation-triangle"
+                aria-hidden="true"
+              ></i> La
               serie no posee temporadas aun.
             </b-alert>
             <ListaTemporadas
@@ -190,18 +263,38 @@
               class="overflow-auto listas"
             />
             <div v-else-if="temporada != null">
-              <b-button variant="danger" block @click="reiniciarTemporada()">
-                <i class="fa fa-times" aria-hidden="true"></i>
+              <b-button
+                variant="danger"
+                block
+                @click="reiniciarTemporada()"
+              >
+                <i
+                  class="fa fa-times"
+                  aria-hidden="true"
+                ></i>
               </b-button>
               <h4>Temporada: {{ temporada.titulo }}</h4>
-              <b-alert variant="warning" show v-if="capitulos.length == 0">
-                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+              <b-alert
+                variant="warning"
+                show
+                v-if="capitulos.length == 0"
+              >
+                <i
+                  class="fa fa-exclamation-triangle"
+                  aria-hidden="true"
+                ></i>
                 La serie no posee capitulos aun.
               </b-alert>
-              <ListaCapitulos :capitulos="capitulos" v-else />
+              <ListaCapitulos
+                :capitulos="capitulos"
+                v-else
+              />
             </div>
           </b-col>
-          <b-col cols-sm="12" cols-md="4">
+          <b-col
+            cols-sm="12"
+            cols-md="4"
+          >
             <b-form-group>
               <b-form-group
                 id="input-group-temporada"
@@ -267,6 +360,20 @@
                 >
                 </b-form-input>
               </b-form-group>
+              <b-form-group
+                id="input-group-sinopsis"
+                label="Sinopsis:"
+                label-for="sinopsis"
+              >
+                <b-form-textarea
+                  id="sinopsis"
+                  v-model="sinopsis"
+                  placeholder="Ingrese sinopsis..."
+                  rows="3"
+                  required
+                  max-rows="6"
+                ></b-form-textarea>
+              </b-form-group>
             </b-form-group>
             <b-overlay
               :show="cargando"
@@ -286,7 +393,11 @@
                 Agregar
               </b-button>
             </b-overlay>
-            <b-button block type="reset" variant="danger">
+            <b-button
+              block
+              type="reset"
+              variant="danger"
+            >
               Cancelar
             </b-button>
           </b-col>
@@ -338,7 +449,8 @@ export default {
         { value: "chn", text: "Chino" }
       ],
       director: "",
-      duracion: ""
+      duracion: "",
+      sinopsis: "",
     };
   },
   computed: {
@@ -362,7 +474,8 @@ export default {
       "filtrarContenido",
       "updateContenido",
       "updateTemporada",
-      "updateCapitulos"
+      "updateCapitulos",
+      "modifySerie"
     ]),
     ...mapMutations(["addBreadcrumb", "setLoadingViews"]),
     getCapitulo() {
@@ -380,7 +493,8 @@ export default {
         idioma: this.idiomasSel,
         subtitulos: this.subtitulosSel,
         director: this.director,
-        idSerie: this.contenido.id
+        idSerie: this.contenido.id,
+        sinopsis: this.sinopsis,
       };
     },
     filtrar() {
@@ -404,10 +518,7 @@ export default {
       this.updateCapitulos(null);
     }
   },
-  beforeCreate() {},
-  created() {
-    this.setLoadingViews();
-  },
+
   mounted() {
     this.cargarSeries();
     this.addBreadcrumb([
@@ -424,6 +535,9 @@ export default {
         to: { name: "Agregar Capitulo" }
       }
     ]);
+  },
+  destroyed() {
+    this.modifySerie(null);
   }
 };
 </script>

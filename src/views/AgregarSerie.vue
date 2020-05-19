@@ -1,6 +1,9 @@
 <template>
   <div>
-    <b-modal id="ModalSerie" title="Confirme">
+    <b-modal
+      id="ModalSerie"
+      title="Confirme"
+    >
       <ContenidoModalSerie :serie="retornaSerie()" />
       <template v-slot:modal-footer="{ ok, cancel }">
         <b-button
@@ -13,18 +16,28 @@
         >
           Agregar
         </b-button>
-        <b-button size="sm" variant="danger" @click="cancel()">
+        <b-button
+          size="sm"
+          variant="danger"
+          @click="cancel()"
+        >
           Cancelar
         </b-button>
       </template>
     </b-modal>
     <b-container>
       <h1 class="display-4 my-3">
-        <i class="fa fa-plus" aria-hidden="true"></i> Agregar Serie
+        <i
+          class="fa fa-plus"
+          aria-hidden="true"
+        ></i> Agregar Serie
       </h1>
       <form @submit.prevent="">
         <b-form-row>
-          <b-col cols-sm="12" cols-md="6">
+          <b-col
+            cols-sm="12"
+            cols-md="6"
+          >
             <b-form-group>
               <b-form-group
                 id="input-group-titulo"
@@ -94,7 +107,10 @@
               </b-form-group>
             </b-form-group>
           </b-col>
-          <b-col cols-sm="12" cols-md="6">
+          <b-col
+            cols-sm="12"
+            cols-md="6"
+          >
             <b-form-group>
               <b-form-group
                 id="input-group-titulo-original"
@@ -207,7 +223,11 @@
               Agregar
             </b-button>
           </b-overlay>
-          <b-button block type="reset" variant="danger">
+          <b-button
+            block
+            type="reset"
+            variant="danger"
+          >
             Restablecer
           </b-button>
         </b-form-group>
