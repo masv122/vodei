@@ -1,16 +1,16 @@
 export default {
   methods: {
-    show(res, tipo) {
+    show(res, tipo, accion) {
       let mensaje = "";
       let variant = "";
       let icono = "";
       if (res.error) {
-        mensaje = `No se pudo agregar la ${tipo}`;
+        mensaje = `No se pudo ${accion} la ${tipo}`;
         variant = "danger";
         icono = "fa-times";
         console.log(res.error_object);
       } else {
-        mensaje = `${tipo} agregada satisfactoriamente`;
+        mensaje = `${tipo} ${accion} satisfactoriamente`;
         variant = "success";
         icono = "fa-check";
       }

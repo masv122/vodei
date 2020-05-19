@@ -356,7 +356,7 @@ export default {
     _agregarPelicula() {
       const resultado = this.agregarPelicula(this.retornaPelicula());
       resultado.then(res => {
-        this.show(res, "Pelicula");
+        this.show(res, "Pelicula", "agregada");
         this.id++;
       });
     }

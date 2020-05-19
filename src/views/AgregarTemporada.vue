@@ -297,7 +297,7 @@ export default {
     _agregarTemporada() {
       const resultado = this.agregarTemporada(this.getTemporada());
       resultado.then(res => {
-        this.show(res, "Temporada");
+        this.show(res, "Temporada", "agregada");
       });
     },
     reiniciarSerie() {

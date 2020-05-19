@@ -366,6 +366,60 @@ export default {
       commit("updateTemporada", temporada);
       return temporada;
     },
+    deletePelicula: async function({ commit, dispatch }, id) {
+      commit("setCargando", null, { root: true });
+      const resultado = await Vue.axios
+        .delete(`/pelicula/${id}`)
+        .then((res) => {
+          if (res.data.error) {
+            commit("setCargando", null, { root: true });
+            return {
+              error: res.data.error,
+              error_object: res.data.error_object,
+            };
+          } else {
+            commit("setCargando", null, { root: true });
+            dispatch("cargarPeliculas", null);
+            return {
+              error: res.data.error,
+            };
+          }
+        })
+        .catch((e) => {
+          commit("updateConErr", true, { root: true });
+          return {
+            error: e,
+          };
+        });
+      return resultado;
+    },
+    deleteSerie: async function({ commit, dispatch }, id) {
+      commit("setCargando", null, { root: true });
+      const resultado = await Vue.axios
+        .delete(`/serie/${id}`)
+        .then((res) => {
+          if (res.data.error) {
+            commit("setCargando", null, { root: true });
+            return {
+              error: res.data.error,
+              error_object: res.data.error_object,
+            };
+          } else {
+            commit("setCargando", null, { root: true });
+            dispatch("cargarSeries", null);
+            return {
+              error: res.data.error,
+            };
+          }
+        })
+        .catch((e) => {
+          commit("updateConErr", true, { root: true });
+          return {
+            error: e,
+          };
+        });
+      return resultado;
+    },
   },
   getters: {
     catalogo: (state) => state.catalogo,

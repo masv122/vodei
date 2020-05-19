@@ -506,7 +506,7 @@ export default {
     _agregarCapitulo() {
       const resultado = this.agregarCapitulo(this.getCapitulo());
       resultado.then(res => {
-        this.show(res, "Capitulo");
+        this.show(res, "Capitulo", "agregada");
       });
     },
     reiniciarSerie() {

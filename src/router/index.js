@@ -18,7 +18,6 @@ const routes = [
   {
     path: "/contenido",
     name: "Contenido",
-
     component: () => import("../views/Contenido.vue"),
   },
   {

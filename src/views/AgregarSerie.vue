@@ -324,7 +324,7 @@ export default {
     _agregarSerie() {
       const resultado = this.agregarSerie(this.retornaSerie());
       resultado.then(res => {
-        this.show(res, "Serie");
+        this.show(res, "Serie", "agregada");
       });
     }
   },
