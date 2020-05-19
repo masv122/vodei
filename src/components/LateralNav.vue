@@ -188,9 +188,6 @@ export default {
     window.removeEventListener("scroll", this.posicionScroll);
   },
   methods: {
-    entra() {
-      console.log("entra");
-    },
     activar(boton) {
       for (var key in this.botones) {
         if (key == boton) {

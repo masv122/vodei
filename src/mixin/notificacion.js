@@ -8,7 +8,7 @@ export default {
         mensaje = `No se pudo ${accion} la ${tipo}`;
         variant = "danger";
         icono = "fa-times";
-        console.log(res.error_object);
+        alert(res.error_object);
       } else {
         mensaje = `${tipo} ${accion} satisfactoriamente`;
         variant = "success";
